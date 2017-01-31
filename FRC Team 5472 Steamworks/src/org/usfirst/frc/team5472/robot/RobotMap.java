@@ -30,9 +30,14 @@ public class RobotMap {
 	public static int backRightMotor = 3;
 	//Peripherals
 	public static int feederMotor = 4;
+	public static int susanMotor = 5; //this is for the lazy-suzan
+	public static int liftMotor = 2;//Talon with a CAN bus for speed controller
 	
 	//Pneumatics
 	public static int singleSolenoid0 = 0;
+	public static int doubSolenoid0 = 1;//there will be two solenoids to lift the feeder
+	
+	
 	
 	private static void modifyValues(RobotID r){
 		switch(r){
@@ -42,6 +47,8 @@ public class RobotMap {
 				break; //Implement when we have a robot 3
 			default:
 				break;
+	
+	
 		}
 	}
 }

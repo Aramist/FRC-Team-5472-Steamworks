@@ -3,12 +3,14 @@ package org.usfirst.frc.team5472.robot.subsystems;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.DriveWithJoystickCommand;
 
+import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,6 +30,13 @@ public class DriveSubsystem extends Subsystem {
 	private static VictorSP frontRight;
 	private static VictorSP backLeft;
 	private static VictorSP backRight;
+	
+	//Extra Motors
+	private static VictorSP feederMotor;
+	private static VictorSP susanMotor;
+	private static CANTalon liftMotor;
+	
+	
 	
 	//PID Outputs for both sides of the tank drivetrain
 	//private PIDOutput leftPIDOutput; //Currently unused
@@ -55,6 +64,11 @@ public class DriveSubsystem extends Subsystem {
 		backLeft = new VictorSP(RobotMap.backLeftMotor);
 		backRight = new VictorSP(RobotMap.backRightMotor);
 		
+		//Initialize other motors
+		feederMotor = new VictorSP(RobotMap.feederMotor);
+		susanMotor = new VictorSP(RobotMap.susanMotor);
+		
+		
 		/*
 		//Initialize PIDOutput Interfaces
 		leftPIDOutput = (double d) -> {
@@ -73,6 +87,8 @@ public class DriveSubsystem extends Subsystem {
 			frontLeft.set(frontLeft.get() - d);
 			backRight.set(backRight.get() + d);
 			backLeft.set(backLeft.get() - d);
+			
+			
 		};
 		
 		//Initialize angle PIDController

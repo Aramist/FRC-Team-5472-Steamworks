@@ -55,6 +55,9 @@ public class Robot extends IterativeRobot {
 		boolean runningAutonomous = autonomousEnabled.getSelected().booleanValue();
 		boolean safetyEnabled = activateSafety.getSelected().booleanValue();
 		//TODO: Autonomous
+		//reset encoder and have the motors drive forward until the getDistance method returns the 
+		//determined value but first we must determine the equivalent distance per "pulse" of the encoder
+		//make an array for all the encoders &  use .start() method before you can get distance
 	}
 
 	@Override
