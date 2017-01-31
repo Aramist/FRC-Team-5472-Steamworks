@@ -16,7 +16,7 @@ public class Robot extends IterativeRobot {
 	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	
 	public static OI oi;
-	
+	//why isn't this working
 	SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
 	SendableChooser<AutonomousStarting> autonomousStarting = new SendableChooser<AutonomousStarting>();
 	SendableChooser<Boolean> activateSafety = new SendableChooser<Boolean>();
