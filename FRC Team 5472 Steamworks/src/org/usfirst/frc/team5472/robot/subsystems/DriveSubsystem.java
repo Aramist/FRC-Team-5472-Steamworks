@@ -88,9 +88,18 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	public void turnToHeading(double angle){
+		turnToHeading(angle, false);
+	}
+	
+	public void turnToHeading(double angle, boolean autostop){
 		stopMotors();
 		anglePIDController.setSetpoint(angle);
 		anglePIDController.enable();
+		if(autostop){
+			while(!anglePIDController.onTarget()){
+				Timer.delay(0.05);
+			}
+		}
 	}
 	
 	public void turnToHeading(double angle, double time){

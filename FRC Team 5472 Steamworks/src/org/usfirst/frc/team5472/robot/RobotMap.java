@@ -34,6 +34,10 @@ public class RobotMap {
 	//Pneumatics
 	public static int singleSolenoid0 = 0;
 	
+	//I2C Communications
+	public static int raspiI2CAddress = 0;
+	
+	
 	private static void modifyValues(RobotID r){
 		switch(r){
 			case ROBOT_2:
