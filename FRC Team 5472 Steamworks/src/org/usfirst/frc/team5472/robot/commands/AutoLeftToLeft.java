@@ -29,6 +29,7 @@ public class AutoLeftToLeft {
 		Robot.driveSubsystem.set(0.3,  0.3);
 		Timer.delay(1.0);
 		Robot.driveSubsystem.set(-0.1, -0.1);
+		Robot.driveSubsystem.set(0.0,0.0);
 		
 		
 	}
