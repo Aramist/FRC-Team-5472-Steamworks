@@ -45,6 +45,10 @@ public class RobotMap {
 	
 	
 	
+	//I2C Communications
+	public static int raspiI2CAddress = 0;
+	
+	
 	private static void modifyValues(RobotID r){
 		switch(r){
 			case ROBOT_2:

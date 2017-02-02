@@ -23,7 +23,6 @@ public class Robot extends IterativeRobot {
 	public static AHRS motion;
 	public AnalogInput pressureSensor;
 	
-	
 	SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
 	SendableChooser<AutonomousStarting> autonomousStarting = new SendableChooser<AutonomousStarting>();
 	SendableChooser<Boolean> activateSafety = new SendableChooser<Boolean>();
