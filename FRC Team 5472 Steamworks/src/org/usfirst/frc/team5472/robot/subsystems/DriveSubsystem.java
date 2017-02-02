@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -34,7 +33,7 @@ public class DriveSubsystem extends Subsystem {
 	//Extra Motors
 	private static VictorSP feederMotor;
 	private static VictorSP susanMotor;
-	private static CANTalon liftMotor;
+	private static CANTalon liftMotor;//do I need to remove this if its present in the subsystem
 	
 	
 	
@@ -44,8 +43,9 @@ public class DriveSubsystem extends Subsystem {
 	private PIDOutput anglePIDOutput;
 	
 	//Encoders
-	private Encoder leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
-	private Encoder rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
+	public static Encoder leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
+	public static Encoder rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
+	
 	
 	//Turning to an angle
 	//PID Constants
@@ -95,6 +95,9 @@ public class DriveSubsystem extends Subsystem {
 		anglePIDController = new PIDController(kP_angle, kI_angle, kD_angle, kF_angle, navx, anglePIDOutput);
 		anglePIDController.setContinuous(true);
 		anglePIDController.setAbsoluteTolerance(10.0);
+		
+		leftEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI );
+		rightEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
 		
 	}
 

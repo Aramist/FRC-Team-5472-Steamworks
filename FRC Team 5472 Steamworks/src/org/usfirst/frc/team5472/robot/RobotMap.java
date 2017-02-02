@@ -3,6 +3,8 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.util.RobotIdentification;
 import org.usfirst.frc.team5472.robot.util.RobotIdentification.RobotID;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 public class RobotMap {
 	
 	static {
@@ -13,7 +15,7 @@ public class RobotMap {
 	
 	//Robot Measurements
 	public static double wheelBaseWidth = 0.60; //Meters
-	public static double wheelDiameter = 4.0 * 2.54 * 10e-2; //Meters
+	public static double wheelDiameter = 4.0 * 2.54; //Centimeters
 	
 	//DIO ports
 	public static int leftEncoderA = 0;
@@ -36,6 +38,10 @@ public class RobotMap {
 	//Pneumatics
 	public static int singleSolenoid0 = 0;
 	public static int doubSolenoid0 = 1;//there will be two solenoids to lift the feeder
+	
+	//Joystick
+	public static Joystick joystick;//not sure if this is supposed to go here
+	
 	
 	
 	
