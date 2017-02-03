@@ -3,19 +3,27 @@ package org.usfirst.frc.team5472.robot;
 
 import org.usfirst.frc.team5472.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
 	
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
+	public static final FeederSubsystem feederSubsystem = new FeederSubsystem();
 	
 	public static OI oi;
+	public static AHRS motion;
+	public AnalogInput pressureSensor;
 	
 	SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
 	SendableChooser<AutonomousStarting> autonomousStarting = new SendableChooser<AutonomousStarting>();
@@ -47,6 +55,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	@Override
@@ -55,6 +64,9 @@ public class Robot extends IterativeRobot {
 		boolean runningAutonomous = autonomousEnabled.getSelected().booleanValue();
 		boolean safetyEnabled = activateSafety.getSelected().booleanValue();
 		//TODO: Autonomous
+		//reset encoder and have the motors drive forward until the getDistance method returns the 
+		//determined value but first we must determine the equivalent distance per "pulse" of the encoder
+		//make an array for all the encoders &  use .start() method before you can get distance
 	}
 
 	@Override
@@ -70,6 +82,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Velocity", motion.getVelocityZ());
+		double pressure = pressureSensor.getVoltage();
+		SmartDashboard.putNumber("Pressure", pressure);//add gauge widget
+		SmartDashboard.putNumber("Yaw", motion.getYaw());
 	}
 	
 	@Override

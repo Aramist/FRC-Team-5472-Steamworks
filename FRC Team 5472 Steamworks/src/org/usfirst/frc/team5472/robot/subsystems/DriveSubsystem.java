@@ -3,6 +3,7 @@ package org.usfirst.frc.team5472.robot.subsystems;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.DriveWithJoystickCommand;
 
+import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -29,14 +30,23 @@ public class DriveSubsystem extends Subsystem {
 	private static VictorSP backLeft;
 	private static VictorSP backRight;
 	
+	//Extra Motors
+	private static VictorSP feederMotor;
+	private static VictorSP susanMotor;
+	private static CANTalon liftMotor;//do I need to remove this if its present in the subsystem
+	
+	
+	
 	//PID Outputs for both sides of the tank drivetrain
 	//private PIDOutput leftPIDOutput; //Currently unused
 	//private PIDOutput rightPIDOutput; //Currently unused
 	private PIDOutput anglePIDOutput;
+	private PIDOutput straightDriveOutput;
 	
 	//Encoders
-	private Encoder leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
-	private Encoder rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
+	public static Encoder leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
+	public static Encoder rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
+	
 	
 	//Turning to an angle
 	//PID Constants
@@ -54,6 +64,11 @@ public class DriveSubsystem extends Subsystem {
 		frontRight = new VictorSP(RobotMap.frontRightMotor);
 		backLeft = new VictorSP(RobotMap.backLeftMotor);
 		backRight = new VictorSP(RobotMap.backRightMotor);
+		
+		//Initialize other motors
+		feederMotor = new VictorSP(RobotMap.feederMotor);
+		susanMotor = new VictorSP(RobotMap.susanMotor);
+		
 		
 		/*
 		//Initialize PIDOutput Interfaces
@@ -75,10 +90,19 @@ public class DriveSubsystem extends Subsystem {
 			backLeft.set(backLeft.get() - d);
 		};
 		
+		straightDriveOutput = (double d) -> {
+			set(d,d);
+		};
+		
+		
+		
 		//Initialize angle PIDController
 		anglePIDController = new PIDController(kP_angle, kI_angle, kD_angle, kF_angle, navx, anglePIDOutput);
 		anglePIDController.setContinuous(true);
 		anglePIDController.setAbsoluteTolerance(10.0);
+		
+		leftEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI );
+		rightEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
 		
 	}
 
@@ -123,6 +147,10 @@ public class DriveSubsystem extends Subsystem {
 		anglePIDController.disable();
 	}
 	
+	public void driveWithVelocity(double velocity){
+		
+	}
+	
 	public void followTrajectory(Waypoint[] waypoints){
 		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 0.05, 1.7, 2.0, 60.0);
 		Trajectory trajectory = Pathfinder.generate(waypoints, config);
@@ -138,8 +166,8 @@ public class DriveSubsystem extends Subsystem {
 			leftFollower.configureEncoder(0, 20, RobotMap.wheelDiameter);
 			rightFollower.configureEncoder(0, 20, RobotMap.wheelDiameter);
 			//TODO: Put these values into RobotMap or a RobotSpecific config file
-			leftFollower.configurePIDVA(0.80, 0.00, 0.01, 0.00 /*TODO: Calculate max velocity*/, 0.50);
-			rightFollower.configurePIDVA(0.80, 0.00, 0.01, 0.00 /*TODO: Calculate max velocity*/, 0.50);
+			leftFollower.configurePIDVA(0.80, 0.00, 0.01, 1.00/6.00 /*TODO: Calculate max velocity*/, 0.50);
+			rightFollower.configurePIDVA(0.80, 0.00, 0.01, 1.00/6.00 /*TODO: Calculate max velocity*/, 0.50);
 			
 			set(leftFollower.calculate(leftEncoder.get()), rightFollower.calculate(rightEncoder.get()));
 			Timer.delay(0.05);
