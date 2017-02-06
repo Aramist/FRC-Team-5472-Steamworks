@@ -9,6 +9,8 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -34,8 +36,6 @@ public class DriveSubsystem extends Subsystem {
 	private static VictorSP feederMotor;
 	private static VictorSP susanMotor;
 	private static CANTalon liftMotor;//do I need to remove this if its present in the subsystem
-	
-	
 	
 	//PID Outputs for both sides of the tank drivetrain
 	//private PIDOutput leftPIDOutput; //Currently unused
@@ -93,8 +93,6 @@ public class DriveSubsystem extends Subsystem {
 		straightDriveOutput = (double d) -> {
 			set(d,d);
 		};
-		
-		
 		
 		//Initialize angle PIDController
 		anglePIDController = new PIDController(kP_angle, kI_angle, kD_angle, kF_angle, navx, anglePIDOutput);
@@ -173,5 +171,26 @@ public class DriveSubsystem extends Subsystem {
 			Timer.delay(0.05);
 		}
 		stopMotors();
+	}
+	
+	class DriveWithVelocityPIDInput implements PIDSource{
+		public double pidGet(){
+			double x = navx.getVelocityX();
+			double y = navx.getVelocityY();
+			double z = navx.getVelocityZ();
+			return Math.sqrt(x*x + y*y + z*z);
+		}
+
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 }

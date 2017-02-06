@@ -3,8 +3,6 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.util.RobotIdentification;
 import org.usfirst.frc.team5472.robot.util.RobotIdentification.RobotID;
 
-import edu.wpi.first.wpilibj.Joystick;
-
 public class RobotMap {
 	
 	static {
