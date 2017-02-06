@@ -33,6 +33,8 @@ public class DriveSubsystem extends Subsystem {
 	//Extra Motors
 	private static VictorSP feederMotor;
 	private static VictorSP susanMotor;
+	private static VictorSP shooterMotor1;
+	private static VictorSP shooterMotor2;
 	private static CANTalon liftMotor;//do I need to remove this if its present in the subsystem
 	
 	
