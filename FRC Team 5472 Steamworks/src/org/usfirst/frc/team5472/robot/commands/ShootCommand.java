@@ -2,11 +2,15 @@ package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 
-
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShootCommand extends Command {
+	private Joystick reference;
 
+	public ShootCommand(){
+		reference = Robot.oi.stick1;
+	}
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
