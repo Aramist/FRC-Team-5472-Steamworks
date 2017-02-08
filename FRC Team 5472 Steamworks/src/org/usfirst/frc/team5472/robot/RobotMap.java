@@ -49,8 +49,10 @@ public class RobotMap {
 	public static int raspiI2CAddress = 0;
 	
 	//Controls
-	public static int feederButton = 3; //Temporary
-	public static int liftButton = 6;
+	public static int feederButton = 2; //Temporary
+	public static int emergencyFeedButton = 11;
+	public static int liftButton = 3;
+	public static int unwindButton = 4;
 	
 	
 	private static void modifyValues(RobotID r){
