@@ -4,6 +4,8 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
+import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
+import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -20,6 +22,8 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public static final FeederSubsystem feederSubsystem = new FeederSubsystem();
+	public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
+	public static final ShooterSubsystem shootSubsystem = new ShooterSubsystem();
 	
 	public static OI oi;
 	public static AHRS motion;
