@@ -33,7 +33,7 @@ public class AutoRightToRight {
 		DriveSubsystem.leftEncoder.reset();
 		DriveSubsystem.rightEncoder.reset();
 		
-		while (DriveSubsystem.leftEncoder.getDistance() > -80)
+		while (DriveSubsystem.leftEncoder.getDistance() > -100)
 		 Robot.driveSubsystem.set(-0.3, -0.3);//back up so won't run into side, back up 80cm
 		
 

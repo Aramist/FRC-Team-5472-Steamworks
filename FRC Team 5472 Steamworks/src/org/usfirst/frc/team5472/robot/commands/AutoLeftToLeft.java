@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class AutoLeftToLeft {
 
-	public AutoLeftToLeft() {
+	public AutoLeftToLeft() {//is it safe to be only using one encoder to detect distance? it may be better to fall short rather than go too far
 		while (DriveSubsystem.leftEncoder.getDistance() < 238)
 			 Robot.driveSubsystem.set(0.3, 0.3);//drive forward 238.90732cm
 			
@@ -32,7 +32,7 @@ public class AutoLeftToLeft {
 			DriveSubsystem.leftEncoder.reset();
 			DriveSubsystem.rightEncoder.reset();
 			
-			while (DriveSubsystem.leftEncoder.getDistance() > -80)
+			while (DriveSubsystem.leftEncoder.getDistance() > -100)
 			 Robot.driveSubsystem.set(-0.3, -0.3);//back up so won't run into side, back up 80cm
 			
 
