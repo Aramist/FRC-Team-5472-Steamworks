@@ -49,11 +49,12 @@ public class RobotMap {
 	public static int raspiI2CAddress = 0;
 	
 	//Controls
-	public static int feederButton = 1; //Temporary
+	public static int shootButton = 1;//trigger in tha back
+	public static int feederButton = 2; //Temporary
 	public static int emergencyFeedButton = 11;
 	public static int liftButton = 3;
 	public static int unwindButton = 4;
-	public static int shootButton = 6;
+	public static int shiftGearButton = 6;
 	public static int susanButton = 5;
 	
 	

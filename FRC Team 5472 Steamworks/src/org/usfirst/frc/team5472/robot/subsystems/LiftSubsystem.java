@@ -28,7 +28,7 @@ public class LiftSubsystem extends Subsystem {
 				SmartDashboard.putNumber("Lift Current", current);
 				Timer.delay(0.2);
 				if (liftSolenoid0.get())
-					SmartDashboard.putString("LiftSolenoid", "LOCKED");//shouldn't this be placed in somewhere other than the constructor?
+					SmartDashboard.putString("LiftSolenoid", "LOCKED");
 				else
 					SmartDashboard.putString("LiftSolenoid", "UNWIND");//check to see if this matches mechanism***
 				if (current > 20)
