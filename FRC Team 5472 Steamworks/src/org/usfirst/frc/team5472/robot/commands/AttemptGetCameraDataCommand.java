@@ -46,5 +46,8 @@ public class AttemptGetCameraDataCommand extends Command {
 	protected boolean isFinished() {
 		return false;
 	}
-
+	
+	public String getReturnedData(){
+		return this.returnedData;
+	}
 }

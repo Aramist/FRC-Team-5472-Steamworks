@@ -25,7 +25,7 @@ public class Robot extends IterativeRobot {
 	public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
 	public static final ShooterSubsystem shootSubsystem = new ShooterSubsystem();
 	
-	public static OI oi;
+	public static OI oi = new OI();
 	public static AHRS motion;
 	public AnalogInput pressureSensor;
 	
@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
-		oi = new OI();
+		//oi = new OI();
 		
 		//Configure the SendableChooser for whether an autonomous Command will be run
 		autonomousEnabled.addDefault("Enabled", new Boolean(true));
@@ -64,13 +64,15 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void autonomousInit() {
-		AutonomousStarting startingPosition = autonomousStarting.getSelected();
-		boolean runningAutonomous = autonomousEnabled.getSelected().booleanValue();
-		boolean safetyEnabled = activateSafety.getSelected().booleanValue();
+		//AutonomousStarting startingPosition = autonomousStarting.getSelected();
+		//boolean runningAutonomous = autonomousEnabled.getSelected().booleanValue();
+		//boolean safetyEnabled = activateSafety.getSelected().booleanValue();
 		//TODO: Autonomous
 		//reset encoder and have the motors drive forward until the getDistance method returns the 
 		//determined value but first we must determine the equivalent distance per "pulse" of the encoder
 		//make an array for all the encoders &  use .start() method before you can get distance
+		
+		
 	}
 
 	@Override

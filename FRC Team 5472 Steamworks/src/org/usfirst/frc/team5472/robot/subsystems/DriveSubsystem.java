@@ -3,12 +3,13 @@ package org.usfirst.frc.team5472.robot.subsystems;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.DriveWithJoystickCommand;
 
-import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -31,19 +32,17 @@ public class DriveSubsystem extends Subsystem {
 	private static VictorSP backRight;
 	
 	//Extra Motors
-	private static VictorSP feederMotor;
-	private static VictorSP susanMotor;
-	private static VictorSP shooterMotor1;
-	private static VictorSP shooterMotor2;
-	private static CANTalon liftMotor;//do I need to remove this if its present in the subsystem
-	
-	
+	//private static VictorSP feederMotor;
+	//private static VictorSP susanMotor;
+	//private static VictorSP shooterMotor1;
+	//private static VictorSP shooterMotor2;
+	//private static CANTalon liftMotor;//do I need to remove this if its present in the subsystem
 	
 	//PID Outputs for both sides of the tank drivetrain
 	//private PIDOutput leftPIDOutput; //Currently unused
 	//private PIDOutput rightPIDOutput; //Currently unused
 	private PIDOutput anglePIDOutput;
-	private PIDOutput straightDriveOutput;
+	//private PIDOutput straightDriveOutput;
 	
 	//Encoders
 	public static Encoder leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
@@ -64,12 +63,12 @@ public class DriveSubsystem extends Subsystem {
 		//Initialize VictorSP objects belonging to drive train
 		frontLeft = new VictorSP(RobotMap.frontLeftMotor);
 		frontRight = new VictorSP(RobotMap.frontRightMotor);
-		backLeft = new VictorSP(RobotMap.backLeftMotor);
-		backRight = new VictorSP(RobotMap.backRightMotor);
+		//backLeft = new VictorSP(RobotMap.backLeftMotor);
+		//backRight = new VictorSP(RobotMap.backRightMotor);
 		
 		//Initialize other motors
-		feederMotor = new VictorSP(RobotMap.feederMotor);
-		susanMotor = new VictorSP(RobotMap.susanMotor);
+		//feederMotor = new VictorSP(RobotMap.feederMotor);
+		//susanMotor = new VictorSP(RobotMap.susanMotor);
 		
 		
 		/*
@@ -92,11 +91,9 @@ public class DriveSubsystem extends Subsystem {
 			backLeft.set(backLeft.get() - d);
 		};
 		
-		straightDriveOutput = (double d) -> {
-			set(d,d);
-		};
-		
-		
+		//straightDriveOutput = (double d) -> {
+		//	set(d,d);
+		//};
 		
 		//Initialize angle PIDController
 		anglePIDController = new PIDController(kP_angle, kI_angle, kD_angle, kF_angle, navx, anglePIDOutput);
@@ -175,5 +172,26 @@ public class DriveSubsystem extends Subsystem {
 			Timer.delay(0.05);
 		}
 		stopMotors();
+	}
+	
+	class DriveWithVelocityPIDInput implements PIDSource{
+		public double pidGet(){
+			double x = navx.getVelocityX();
+			double y = navx.getVelocityY();
+			double z = navx.getVelocityZ();
+			return Math.sqrt(x*x + y*y + z*z);
+		}
+
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 }

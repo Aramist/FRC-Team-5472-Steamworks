@@ -17,23 +17,28 @@ public class OI {
 
 	public OI(){
 		//TODO: Fill this in when controls are decided
-		
 		stick1 = new Joystick(0);
 		//stick2 = new Joystick(1);
 		//potentiometer at base will dictate speed of feeder
 		button1 = new JoystickButton(stick1, 1);//shoot
+		//button1 = new JoystickButton(stick1, 1);
 		button2 = new JoystickButton(stick1, 2);//feeder
-		button3 = new JoystickButton(stick1, 3);//lift
-		button4 = new JoystickButton(stick1, 4);//unwind
+		//button3 = new JoystickButton(stick1, 3);//lift
+		//button4 = new JoystickButton(stick1, 4);//unwind
 		button5 = new JoystickButton(stick1, 5);//turn lazy susan to face shooter at boiler
 		button6 = new JoystickButton(stick1, 6);// gear shift low to high
 		button7 = new JoystickButton(stick1, 7);
 		button8 = new JoystickButton(stick1, 8);
+		button6 = new JoystickButton(stick1, 6);// shoot
+		//button7 = new JoystickButton(stick1, 7);
+		//button8 = new JoystickButton(stick1, 8);
 		button11 = new JoystickButton(stick1, 11);//feeder goes backward at full speed because that means something is jammed
 		//they want the lower switch (by the Logitech logo) to be the mechanism that controls the speed of the feeder. Positive values only 
 		//I was hoping to have button12 reset all of the monitored values on the dashboard
 		button3.whileHeld(new LiftPositiveCommand());
 		button4.whileHeld(new LiftNegativeCommand());
+		//button3.whileHeld(new LiftPositiveCommand());
+		//button4.whileHeld(new LiftNegativeCommand());
 		button2.whileHeld(new FeedCommand());
 		button5.whileHeld(new ShootCommand());
 		button1.whileHeld(new ShootCommand());
