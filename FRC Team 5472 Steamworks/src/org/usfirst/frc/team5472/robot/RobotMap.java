@@ -3,12 +3,6 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.util.RobotIdentification;
 import org.usfirst.frc.team5472.robot.util.RobotIdentification.RobotID;
 
-<<<<<<< HEAD
-=======
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.VictorSP;
-
->>>>>>> branch 'master' of https://github.com/StallionRobotics5472/FRC-Team-5472-Steamworks.git
 public class RobotMap {
 	
 	static {
@@ -30,16 +24,16 @@ public class RobotMap {
 	
 	//PWM ports
 	//Drive motors
-	public static int frontLeftMotor = 0;
-	public static int frontRightMotor = 1;
-	public static int backLeftMotor = 2;
-	public static int backRightMotor = 3;
+	public static int frontLeftMotor = 2;
+	public static int frontRightMotor = 3;
+	//public static int backLeftMotor = 2;
+	//public static int backRightMotor = 3;
 	//Peripherals
-	public static int feederMotor = 4;
+	public static int feederMotor = 0;
 
 	public static int shooterMotor1 = 6;
-	public static int shooterMotor2 = 7;//there are now two motors for the shooter for better accuracy
-	public static int susanMotor = 5; //this is for the lazy-suzan
+	public static int shooterMotor2 = 5;//there are now two motors for the shooter for better accuracy
+	public static int susanMotor = 1; //this is for the lazy-suzan
 	public static int liftMotor = 2;//Talon with a CAN bus for speed controller
 	
 	//Pneumatics
@@ -59,7 +53,7 @@ public class RobotMap {
 	public static int shootButton = 6;
 	public static int susanButton = 5;
 	
-	
+	public static int conveyor = 4;
 	
 	private static void modifyValues(RobotID r){
 		switch(r){

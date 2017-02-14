@@ -6,15 +6,10 @@
 	<classpathentry exported="true" kind="var" path="opencv" sourcepath="opencv.sources"/>
 	<classpathentry exported="true" kind="var" path="cscore" sourcepath="cscore.sources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-<<<<<<< HEAD
-	<classpathentry kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
-	<classpathentry kind="var" path="navx-mxp"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/Pathfinder-Java.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
-=======
 	<classpathentry exported="true" kind="var" path="USERLIBS_DIR/CTRLib.jar"/>
 	<classpathentry exported="true" kind="var" path="navx-mxp"/>
-	<classpathentry exported="true" kind="var" path="USERLIBS_DIR/Pathfinder-Java.jar"/>
->>>>>>> branch 'master' of https://github.com/StallionRobotics5472/FRC-Team-5472-Steamworks.git
+	<classpathentry kind="var" path="USERLIBS_DIR/opencv-320.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
