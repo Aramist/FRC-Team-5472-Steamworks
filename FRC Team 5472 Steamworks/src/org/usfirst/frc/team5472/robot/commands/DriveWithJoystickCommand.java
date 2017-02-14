@@ -9,7 +9,7 @@ public class DriveWithJoystickCommand extends Command {
 	public static Joystick joystick;
 	public DriveWithJoystickCommand() {
 		super("Joystick Drive");
-		
+		requires(Robot.driveSubsystem);
 	}
 	
 	@Override
