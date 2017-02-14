@@ -6,10 +6,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithJoystickCommand extends Command {
-	public static Joystick joystick;
+	public Joystick j;
 	public DriveWithJoystickCommand() {
 		super("Joystick Drive");
 		requires(Robot.driveSubsystem);
+		j = Robot.oi.stick1;
 	}
 	
 	@Override
@@ -19,7 +20,6 @@ public class DriveWithJoystickCommand extends Command {
 	
 	@Override
 	public void execute(){
-		Joystick j = Robot.oi.stick1;
 		
 		double y = j.getY();
 		double twist = j.getX();

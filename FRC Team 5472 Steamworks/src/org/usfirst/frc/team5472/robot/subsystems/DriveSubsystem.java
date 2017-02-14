@@ -45,8 +45,8 @@ public class DriveSubsystem extends Subsystem {
 	//private PIDOutput straightDriveOutput;
 	
 	//Encoders
-	public static Encoder leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
-	public static Encoder rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
+	public Encoder leftEncoder;
+	public Encoder rightEncoder;
 	
 	
 	//Turning to an angle
@@ -70,6 +70,9 @@ public class DriveSubsystem extends Subsystem {
 		//feederMotor = new VictorSP(RobotMap.feederMotor);
 		//susanMotor = new VictorSP(RobotMap.susanMotor);
 		
+		
+		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
+		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
 		
 		/*
 		//Initialize PIDOutput Interfaces
@@ -102,7 +105,8 @@ public class DriveSubsystem extends Subsystem {
 		
 		leftEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI );
 		rightEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
-		
+		//Y'alll don't know what a real English class is
+		//\tAnna Darwish, 2017
 	}
 
 	@Override
@@ -144,6 +148,15 @@ public class DriveSubsystem extends Subsystem {
 		backLeft.set(0.0);
 		backRight.set(0.0);
 		anglePIDController.disable();
+	}
+	
+	public Encoder getLeftEncoder()
+	{
+		 return leftEncoder;
+	}
+	public Encoder getRightEncoder()
+	{
+		 return rightEncoder;
 	}
 	
 	public void driveWithVelocity(double velocity){

@@ -1,13 +1,10 @@
 
 package org.usfirst.frc.team5472.robot;
 
-import org.usfirst.frc.team5472.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
-
-import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -20,13 +17,11 @@ public class Robot extends IterativeRobot {
 
 	
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	public static final FeederSubsystem feederSubsystem = new FeederSubsystem();
 	public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
 	public static final ShooterSubsystem shootSubsystem = new ShooterSubsystem();
 	
-	public static OI oi = new OI();
-	public static AHRS motion;
+	public static final OI oi = new OI();
 	public AnalogInput pressureSensor;
 	
 	SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
@@ -47,7 +42,6 @@ public class Robot extends IterativeRobot {
 		//Configure the SendableChooser for activation of "safety" mode
 		activateSafety.addDefault("Disabled", new Boolean(false));
 		activateSafety.addDefault("Enabled", new Boolean(true));
-		
 		
 	}
 

@@ -12,20 +12,24 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiftSubsystem extends Subsystem {
-	private static CANTalon liftMotor;
+	private static final CANTalon liftMotor = new CANTalon(RobotMap.liftMotor);
 
-	private static Solenoid liftSolenoid0;
+	private static final Solenoid liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
 
 
 	public LiftSubsystem() {
 		Thread t = new Thread(() -> {
 			double current;
-			liftMotor = new CANTalon(RobotMap.liftMotor);
-			liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
+			
 			while (DriverStation.getInstance().isEnabled()) {
 				current = liftMotor.getOutputCurrent();	
 				SmartDashboard.putNumber("Lift Current", current);
-				Timer.delay(0.2);
+				//Timer.delay(0.2);
+				try {
+					this.wait(200L);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				if (liftSolenoid0.get())
 					SmartDashboard.putString("LiftSolenoid", "LOCKED");//shouldn't this be placed in somewhere other than the constructor?
 				else
