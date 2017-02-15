@@ -12,15 +12,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LiftSubsystem extends Subsystem {
-	private static final CANTalon liftMotor = new CANTalon(RobotMap.liftMotor);
+	private CANTalon liftMotor;
 
-	private static final Solenoid liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
+	private Solenoid liftSolenoid0;
 
 
 	public LiftSubsystem() {
+		super("Lift");
 		Thread t = new Thread(() -> {
 			double current;
-			
+			this.liftMotor = new CANTalon(RobotMap.liftMotor);
+			this.liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
 			while (DriverStation.getInstance().isEnabled()) {
 				current = liftMotor.getOutputCurrent();	
 				SmartDashboard.putNumber("Lift Current", current);

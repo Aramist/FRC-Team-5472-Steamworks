@@ -7,20 +7,26 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class LiftPositiveCommand extends Command {
-	private Joystick reference;
+private Joystick j;
 	
 	public LiftPositiveCommand(){
-		reference = Robot.oi.stick1;
+		requires(Robot.feederSubsystem);
+		
 	}
+	
+	
 	@Override
+	public void initialize(){
+		j = Robot.oi.getJoystick();
+	}
 	protected boolean isFinished() {
 		return false;
 	}
 	
 	@Override
 	public void execute(){
-		double x = (reference.getRawButton(RobotMap.liftButton)) ? 0.8 : 0.0;
-		Robot.liftSubsystem.setLift(x);
+		if( j.getRawButton(RobotMap.liftButton));
+		Robot.liftSubsystem.setLift(0.6);//unsure of how this value will respond
 	}
 	
 	@Override

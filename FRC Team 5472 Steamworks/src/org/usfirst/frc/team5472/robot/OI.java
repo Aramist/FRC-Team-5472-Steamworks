@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5472.robot;
+package org.usfirst.frc.team5472.robot;//5472
 
 import org.usfirst.frc.team5472.robot.commands.CloggedFeederCommand;
 import org.usfirst.frc.team5472.robot.commands.FeedCommand;
@@ -11,11 +11,24 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 	
-	public Joystick stick1;
+private Joystick stick;
+	
+	public OI(){
+		stick = new Joystick(0);
+	}
+	
+	public Joystick getJoystick(){
+		return this.stick;
+	}
+
+
+	
+	/*private Joystick stick1;
 	
 	private JoystickButton button1,button2,button3,button4,button5,button6,button7,button8,button11;
 
 	public OI(){
+		
 		//TODO: Fill this in when controls are decided
 		stick1 = new Joystick(0);
 		//stick2 = new Joystick(1);
@@ -42,7 +55,7 @@ public class OI {
 		button2.whileHeld(new FeedCommand());
 		button5.whileHeld(new ShootCommand());
 		button1.whileHeld(new ShootCommand());
-		button11.whileHeld(new CloggedFeederCommand());
+		button11.whileHeld(new CloggedFeederCommand()); */
 		
 	}
 }

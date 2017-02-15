@@ -7,12 +7,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 //to assure accuracy, two motors will be controlling the shooter
 public class ShooterSubsystem extends Subsystem {
 	
-	public final static VictorSP shooterMotor1 = new VictorSP(RobotMap.shooterMotor1);//one spins forwards, and one spins backwards - won't know until bot is wired; big wheel spinning at constant speed
-	public final static VictorSP shooterMotor2 = new VictorSP(RobotMap.shooterMotor2); //smaller wheel will depend on different values
-	public final static VictorSP conveyor = new VictorSP(RobotMap.conveyor);
-	public final static VictorSP susanMotor = new VictorSP(RobotMap.susanMotor);
+	private VictorSP shooterMotor1;//one spins forwards, and one spins backwards - won't know until bot is wired; big wheel spinning at constant speed
+	private VictorSP shooterMotor2; //smaller wheel will depend on different values
+	private VictorSP conveyor;
+	private VictorSP susanMotor;
+	
 	public ShooterSubsystem(){
-		
+		super("Shoot");
+		shooterMotor1 = new VictorSP(RobotMap.shooterMotor1);
+		shooterMotor2 = new VictorSP(RobotMap.shooterMotor2);
+		conveyor = new VictorSP(RobotMap.conveyor);
+		susanMotor = new VictorSP(RobotMap.susanMotor);
 	}
 	
 	@Override
@@ -34,6 +39,11 @@ public class ShooterSubsystem extends Subsystem {
 	{
      shooterMotor2.set(d);	
      conveyor.set(0.3);
+	}
+	
+	public void setConveyor(double d)
+	{
+		conveyor.set(d);
 	}
 	
 	

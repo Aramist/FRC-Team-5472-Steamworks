@@ -8,25 +8,32 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class FeedCommand extends Command{
 	
-	private Joystick reference;
+private Joystick j;
 	
-	public FeedCommand(){
-		reference = Robot.oi.stick1;
-	}
-	
-	public void execute(){
-		double x = (reference.getRawButton(RobotMap.feederButton)) ? 0.6 : 0.0;
-		Robot.feederSubsystem.setFeeder(x);
+	public FeedCommand() {
+		requires(Robot.feederSubsystem);
 	}
 	
 	@Override
-	protected boolean isFinished() {
-		return true;
+	public void initialize(){
+		j = Robot.oi.getJoystick();
+	}
+	
+	@Override
+	public void execute(){
+
+		
+		if(j.getRawButton(RobotMap.feederButton)){
+			Robot.feederSubsystem.setFeeder(0.5);//NOT 0.5, potentiometer setter*****
+		
+		}else{
+			Robot.feederSubsystem.stop();
+		}
 	}
 	
 	@Override
 	public void end(){
-		Robot.feederSubsystem.setFeeder(0.0);
+		Robot.feederSubsystem.stop();
 	}
 	
 	@Override
@@ -34,4 +41,8 @@ public class FeedCommand extends Command{
 		end();
 	}
 	
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
 }

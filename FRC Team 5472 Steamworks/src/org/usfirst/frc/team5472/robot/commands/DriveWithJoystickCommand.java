@@ -6,45 +6,41 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DriveWithJoystickCommand extends Command {
-	public Joystick j;
+	
+	private Joystick j;
+	
 	public DriveWithJoystickCommand() {
-		super("Joystick Drive");
 		requires(Robot.driveSubsystem);
-		j = Robot.oi.stick1;
 	}
-	
+
 	@Override
-	public void initialize(){
-		Robot.driveSubsystem.stopMotors();
+	protected void initialize() {
+		j = Robot.oi.getJoystick();
 	}
-	
+
 	@Override
-	public void execute(){
+	protected void execute() {
+		double throttle = j.getY();
+		double twist = j.getTwist() / 2.0;
 		
-		double y = j.getY();
-		double twist = j.getX();
-		
-		double left = y + twist/2.0;
-		double right = y - twist/2.0;
-		
-		Robot.driveSubsystem.set(left, right);
-		
-	
+		Robot.driveSubsystem.drive(throttle + twist, throttle - twist, throttle + twist, throttle - twist);
 	}
-	
-	@Override
-	public void end(){
-		Robot.driveSubsystem.stopMotors();
-	}
-	
-	@Override
-	public void interrupted(){
-		end();
-	}
-	
+
 	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 
+	@Override
+	protected void end() {
+		Robot.driveSubsystem.stop();
+	}
+
+	@Override
+	protected void interrupted() {
+		end();
+	}
 }
+
+
+

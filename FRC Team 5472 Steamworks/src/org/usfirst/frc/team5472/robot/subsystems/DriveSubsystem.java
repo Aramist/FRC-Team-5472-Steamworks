@@ -23,13 +23,13 @@ import jaci.pathfinder.modifiers.TankModifier;
 public class DriveSubsystem extends Subsystem {
 	
 	//Navx-MXP
-	protected static AHRS navx = new AHRS(SPI.Port.kMXP);
+	protected AHRS navx = new AHRS(SPI.Port.kMXP);
 	
 	//Drive motors
-	private static VictorSP frontLeft;
-	private static VictorSP frontRight;
-	private static VictorSP backLeft;
-	private static VictorSP backRight;
+	private  VictorSP frontLeft;
+	private VictorSP frontRight;
+	private VictorSP backLeft;
+	private VictorSP backRight;
 	
 	//Extra Motors
 	//private static VictorSP feederMotor;
@@ -108,11 +108,23 @@ public class DriveSubsystem extends Subsystem {
 		//Y'alll don't know what a real English class is
 		//\tAnna Darwish, 2017
 	}
-
-	@Override
-	protected void initDefaultCommand() {
+	
+	public void drive(double frontLeft, double frontRight, double backLeft, double backRight){
+		this.frontLeft.set(frontLeft);
+		this.frontRight.set(frontRight);
+		this.backLeft.set(backLeft);
+		this.backRight.set(backRight);
+	}
+	
+	public void stop(){
+		drive(0, 0, 0, 0);
+	}
+	
+	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoystickCommand());
 	}
+
+	
 	
 	public void turnToHeading(double angle){
 		turnToHeading(angle, false);
