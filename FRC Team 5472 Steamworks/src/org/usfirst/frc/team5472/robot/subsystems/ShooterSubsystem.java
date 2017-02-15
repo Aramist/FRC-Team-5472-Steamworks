@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
 import org.usfirst.frc.team5472.robot.RobotMap;
+import org.usfirst.frc.team5472.robot.commands.LazySusanCommand;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,7 +23,7 @@ public class ShooterSubsystem extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		
+		setDefaultCommand(new LazySusanCommand());
 	}
 	
 	public void setShoot1(double d)

@@ -24,7 +24,12 @@ private Joystick j;
 	
 	@Override
 	public void execute(){
-		double turn = j.getTwist() / 3.0;
+		double turn = 0.0;
+		int angle = j.getPOV();
+		if(angle == 90)
+			turn = 0.3;
+		else if(angle == 270)
+			turn = -0.3;
 		Robot.shootSubsystem.setSusanMotor(turn);
 	}
 	

@@ -32,13 +32,6 @@ public class DriveSubsystem extends Subsystem {
 	private VictorSP backLeft;
 	private VictorSP backRight;
 	
-	//Extra Motors
-	private  VictorSP feederMotor;
-	private  VictorSP susanMotor;
-	private VictorSP shooterMotor1;
-	private VictorSP shooterMotor2;
-	private CANTalon liftMotor;//do I need to remove this if its present in the subsystem
-	
 	//PID Outputs for both sides of the tank drivetrain
 	//private PIDOutput leftPIDOutput; //Currently unused
 	//private PIDOutput rightPIDOutput; //Currently unused
@@ -67,12 +60,6 @@ public class DriveSubsystem extends Subsystem {
 		backLeft = new VictorSP(RobotMap.backLeftMotor);
 		backRight = new VictorSP(RobotMap.backRightMotor);
 		
-		//Initialize other motors
-		feederMotor = new VictorSP(RobotMap.feederMotor);
-		susanMotor = new VictorSP(RobotMap.susanMotor);
-		shooterMotor1 = new VictorSP(RobotMap.shooterMotor1);
-		shooterMotor2 = new VictorSP(RobotMap.shooterMotor2);
-		liftMotor = new CANTalon(RobotMap.liftMotor);//how to initialize
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
 		

@@ -84,10 +84,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Velocity", motion.getVelocityZ());//motion?
-		double pressure = pressureSensor.getVoltage();
-		SmartDashboard.putNumber("Pressure", pressure);//add gauge widget
-		SmartDashboard.putNumber("Yaw", motion.getYaw());
+		
 	}
 	
 	@Override
