@@ -7,25 +7,30 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class LazySusanCommand extends Command {
 
-	private Joystick reference;
+private Joystick j;
 	
-	public LazySusanCommand() {
-		this.reference = Robot.oi.stick1;
+	public LazySusanCommand(){
+		requires(Robot.shootSubsystem);
+		
 	}
-	
 	@Override
-	public void execute(){
-		double turn = reference.getTwist() / 3.0;
-		Robot.shootSubsystem.setSusanMotor(turn);
+	public void initialize(){
+		j = Robot.oi.getJoystick();
 	}
-	
-	@Override
 	protected boolean isFinished() {
 		return false;
 	}
 	
+	
+	@Override
+	public void execute(){
+		double turn = j.getTwist() / 3.0;
+		Robot.shootSubsystem.setSusanMotor(turn);
+	}
+	
+	
 	public void end(){
-		Robot.shootSubsystem.setSusanMotor(0D);
+		Robot.shootSubsystem.setSusanMotor(0);
 	}
 	
 	public void interrupted(){

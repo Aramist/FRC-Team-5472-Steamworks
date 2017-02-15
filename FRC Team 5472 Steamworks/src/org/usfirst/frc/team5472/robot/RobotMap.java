@@ -26,8 +26,8 @@ public class RobotMap {
 	//Drive motors
 	public static int frontLeftMotor = 2;
 	public static int frontRightMotor = 3;
-	//public static int backLeftMotor = 2;
-	//public static int backRightMotor = 3;
+	public static int backLeftMotor = 2;
+	public static int backRightMotor = 3;
 	//Peripherals
 	public static int feederMotor = 0;
 
@@ -44,6 +44,7 @@ public class RobotMap {
 	//button nine - when solenoid is pressurized or depressurized (Justin wasn't sure) ~ go backwards
 	//I2C Communications
 	public static int raspiI2CAddress = 0;
+	public static int shiftGearSolenoid0 = 3;
 	
 	//Controls
 	public static int shootButton = 1;//trigger in tha back
@@ -53,6 +54,7 @@ public class RobotMap {
 	public static int unwindButton = 4;
 	public static int shiftGearButton = 6;
 	public static int susanButton = 5;
+	
 	
 	public static int conveyor = 4;
 	

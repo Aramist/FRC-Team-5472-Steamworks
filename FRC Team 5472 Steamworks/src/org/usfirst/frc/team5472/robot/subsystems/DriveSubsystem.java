@@ -3,6 +3,7 @@ package org.usfirst.frc.team5472.robot.subsystems;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.DriveWithJoystickCommand;
 
+import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -32,11 +33,11 @@ public class DriveSubsystem extends Subsystem {
 	private VictorSP backRight;
 	
 	//Extra Motors
-	//private static VictorSP feederMotor;
-	//private static VictorSP susanMotor;
-	//private static VictorSP shooterMotor1;
-	//private static VictorSP shooterMotor2;
-	//private static CANTalon liftMotor;//do I need to remove this if its present in the subsystem
+	private  VictorSP feederMotor;
+	private  VictorSP susanMotor;
+	private VictorSP shooterMotor1;
+	private VictorSP shooterMotor2;
+	private CANTalon liftMotor;//do I need to remove this if its present in the subsystem
 	
 	//PID Outputs for both sides of the tank drivetrain
 	//private PIDOutput leftPIDOutput; //Currently unused
@@ -63,14 +64,15 @@ public class DriveSubsystem extends Subsystem {
 		//Initialize VictorSP objects belonging to drive train
 		frontLeft = new VictorSP(RobotMap.frontLeftMotor);
 		frontRight = new VictorSP(RobotMap.frontRightMotor);
-		//backLeft = new VictorSP(RobotMap.backLeftMotor);
-		//backRight = new VictorSP(RobotMap.backRightMotor);
+		backLeft = new VictorSP(RobotMap.backLeftMotor);
+		backRight = new VictorSP(RobotMap.backRightMotor);
 		
 		//Initialize other motors
-		//feederMotor = new VictorSP(RobotMap.feederMotor);
-		//susanMotor = new VictorSP(RobotMap.susanMotor);
-		
-		
+		feederMotor = new VictorSP(RobotMap.feederMotor);
+		susanMotor = new VictorSP(RobotMap.susanMotor);
+		shooterMotor1 = new VictorSP(RobotMap.shooterMotor1);
+		shooterMotor2 = new VictorSP(RobotMap.shooterMotor2);
+		liftMotor = new CANTalon(RobotMap.liftMotor);//how to initialize
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
 		

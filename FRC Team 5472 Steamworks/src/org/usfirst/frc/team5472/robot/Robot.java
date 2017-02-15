@@ -4,6 +4,7 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
+import org.usfirst.frc.team5472.robot.subsystems.ShiftGearSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -16,10 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	
-	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();//should these be static
 	public static final FeederSubsystem feederSubsystem = new FeederSubsystem();
 	public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
 	public static final ShooterSubsystem shootSubsystem = new ShooterSubsystem();
+	public static final ShiftGearSubsystem shiftGearSubsystem = new ShiftGearSubsystem();
 	
 	public static final OI oi = new OI();
 	public AnalogInput pressureSensor;
@@ -82,7 +84,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Velocity", motion.getVelocityZ());
+		SmartDashboard.putNumber("Velocity", motion.getVelocityZ());//motion?
 		double pressure = pressureSensor.getVoltage();
 		SmartDashboard.putNumber("Pressure", pressure);//add gauge widget
 		SmartDashboard.putNumber("Yaw", motion.getYaw());

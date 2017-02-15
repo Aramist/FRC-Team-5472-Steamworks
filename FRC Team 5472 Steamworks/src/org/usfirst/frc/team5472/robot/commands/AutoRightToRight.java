@@ -8,7 +8,7 @@ public class AutoRightToRight {
 
 	public AutoRightToRight() {
 		
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 238)
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 55.88)
 		 Robot.driveSubsystem.set(0.3, 0.3);//drive forward 238.90732cm
 		
 		Robot.driveSubsystem.set(-0.1,  -0.1);//slow down
@@ -20,7 +20,7 @@ public class AutoRightToRight {
 		Robot.driveSubsystem.getLeftEncoder().reset();
 		Robot.driveSubsystem.getRightEncoder().reset();
 		
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 80)
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 27.94)
 		 Robot.driveSubsystem.set(0.3,  0.3);//drive forward 80cm
 		
 	
@@ -35,7 +35,7 @@ public class AutoRightToRight {
 
 		
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -100)
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -35)
 
 		 Robot.driveSubsystem.set(-0.3, -0.3);//back up so won't run into side, back up 80cm
 		

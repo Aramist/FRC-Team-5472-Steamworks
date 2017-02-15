@@ -4,26 +4,38 @@ import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.RobotMap;//is  this class necessary
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class LowToHighGearCommand {
-	private Joystick reference;
+public class LowToHighGearCommand extends Command{
+	private Joystick j;
 	
 	public LowToHighGearCommand(){
-		reference = Robot.oi.stick1;
+		requires(Robot.shiftGearSubsystem);
 		
+		
+	}
+	
+	@Override
+	public void initialize(){
+		j = Robot.oi.getJoystick();
 	}
 	protected boolean isFinished() {
 		return false;
 	}
-/*	
 	@Override
 	public void execute(){
-		double x = (reference.getRawButton(RobotMap.shiftGearButton)) ? 0.8 : 0.0;
-		Robot.liftSubsystem.setLift(x);
+		double x = (j.getRawButton(RobotMap.shiftGearButton)) ? 0.8 : 0.0;
+	
 	}
 	
 	@Override
-	public void end(){
-		Robot.liftSubsystem.setLift(0); */
+	public void interrupted(){
+		end();
+	}
+	
+	@Override
+	protected boolean isFinished() {
+		return false;
+	}
 	}
 
