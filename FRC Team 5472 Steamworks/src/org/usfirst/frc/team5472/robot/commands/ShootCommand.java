@@ -23,7 +23,7 @@ private Joystick j;
 	
 	@Override
 	public void execute(){
-		if (j.getRawButton(5))//alternate idea - if boiler is recognized by camera & contingency plan is to have them be able to manually turn it
+		if (j.getRawButton(RobotMap.susanButton))//alternate idea - if boiler is recognized by camera & contingency plan is to have them be able to manually turn it
 		{
 			double x = (j.getRawButton(RobotMap.susanButton)) ? 0.3 : 0.0;//not sure how slowly it needs to be spin to allow the camera to register the boiler
 			//repeat this task until it is correctly oriented towards boiler

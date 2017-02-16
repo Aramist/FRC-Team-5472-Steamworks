@@ -12,6 +12,7 @@ public class ShooterSubsystem extends Subsystem {
 	private VictorSP shooterMotor2; //smaller wheel will depend on different values
 	private VictorSP conveyor;
 	private VictorSP susanMotor;
+	private VictorSP agitatorMotor;
 	
 	public ShooterSubsystem(){
 		super("Shoot");
@@ -19,6 +20,7 @@ public class ShooterSubsystem extends Subsystem {
 		shooterMotor2 = new VictorSP(RobotMap.shooterMotor2);
 		conveyor = new VictorSP(RobotMap.conveyor);
 		susanMotor = new VictorSP(RobotMap.susanMotor);
+		agitatorMotor = new VictorSP(RobotMap.agitatorMotor);
 	}
 	
 	@Override
@@ -28,22 +30,26 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public void setShoot1(double d)
 	{
+     agitatorMotor.set(0.7);// check value
      shooterMotor1.set(d);	
      conveyor.set(0.3);
 	}
 	public void setSusanMotor(double d)
 	{
+     agitatorMotor.set(0.7);
      susanMotor.set(d);		
      conveyor.set(0.3);
 	}
 	public void setShoot2(double d)
 	{
+	 agitatorMotor.set(0.7);
      shooterMotor2.set(d);	
      conveyor.set(0.3);
 	}
 	
 	public void setConveyor(double d)
 	{
+		agitatorMotor.set(0.7);
 		conveyor.set(d);
 	}
 	

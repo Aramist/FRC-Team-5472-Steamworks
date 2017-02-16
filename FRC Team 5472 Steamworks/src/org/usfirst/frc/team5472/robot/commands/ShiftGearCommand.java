@@ -4,13 +4,16 @@ import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.RobotMap;//is  this class necessary
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LowToHighGearCommand extends Command{
+public class ShiftGearCommand extends Command{
 	private Joystick j;
 	
-	public LowToHighGearCommand(){
-		requires(Robot.shiftGearSubsystem);
+	
+	public ShiftGearCommand(){
+		requires(Robot.driveSubsystem);
+		
 		
 		
 	}
@@ -24,7 +27,8 @@ public class LowToHighGearCommand extends Command{
 	}
 	@Override
 	public void execute(){
-		double x = (j.getRawButton(RobotMap.shiftGearButton)) ? 0.8 : 0.0;
+		if(j.getRawButton(RobotMap.shiftGearButton))
+		  Robot.driveSubsystem.switchSolenoid();
 	
 	}
 	
@@ -33,9 +37,6 @@ public class LowToHighGearCommand extends Command{
 		end();
 	}
 	
-	@Override
-	protected boolean isFinished() {
-		return false;
-	}
+	
 	}
 

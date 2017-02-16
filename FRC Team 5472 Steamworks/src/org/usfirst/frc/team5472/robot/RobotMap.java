@@ -35,10 +35,11 @@ public class RobotMap {
 	public static int shooterMotor2 = 5;//there are now two motors for the shooter for better accuracy
 	public static int susanMotor = 1; //this is for the lazy-suzan
 	public static int liftMotor = 2;//Talon with a CAN bus for speed controller
+	public static int agitatorMotor = 3;
 	
 	//Pneumatics
 	public static int singleSolenoid0 = 0;
-	public static int doubSolenoid0 = 1;//there will be two solenoids to lift the feeder
+	public static int doubSolenoid0 = 1;//there will be two solenoids to lift the feeder - check if present still or was for other bot
 	public static int liftSolenoid0 = 2;//there needs to be an additional solenoid that permits the lift mechanism to rotate backwards when necessary
 	//button ten - bot lift
 	//button nine - when solenoid is pressurized or depressurized (Justin wasn't sure) ~ go backwards

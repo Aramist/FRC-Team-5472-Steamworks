@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,12 +26,13 @@ public class DriveSubsystem extends Subsystem {
 	
 	//Navx-MXP
 	protected AHRS navx = new AHRS(SPI.Port.kMXP);
-	
+	//the tester robot only has two drive motors - competition has four
 	//Drive motors
 	private  VictorSP frontLeft;
 	private VictorSP frontRight;
 	private VictorSP backLeft;
 	private VictorSP backRight;
+	private Solenoid shiftGearSolenoid0;
 	
 	//PID Outputs for both sides of the tank drivetrain
 	//private PIDOutput leftPIDOutput; //Currently unused
@@ -112,6 +114,17 @@ public class DriveSubsystem extends Subsystem {
 	public void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoystickCommand());
 	}
+	
+	public boolean check()
+ 	{
+ 	 return shiftGearSolenoid0.get();
+ 	}
+	
+	public boolean switchSolenoid()
+ 	{
+ 	 shiftGearSolenoid0.set(!shiftGearSolenoid0.get());
+ 	 return shiftGearSolenoid0.get();
+ 	}
 
 	
 	
