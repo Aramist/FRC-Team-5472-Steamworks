@@ -1,15 +1,6 @@
 package org.usfirst.frc.team5472.robot;
 
-import org.usfirst.frc.team5472.robot.util.RobotIdentification;
-import org.usfirst.frc.team5472.robot.util.RobotIdentification.RobotID;
-
 public class RobotMap {
-	
-	static {
-		RobotID r = RobotIdentification.getRobot();
-		if(RobotIdentification.getRobot() != RobotID.ROBOT_1)
-			modifyValues(r);
-	}
 	
 	//Robot Measurements
 	public static double wheelDiameter = 4.0 * 2.54; //Centimeters
@@ -58,17 +49,4 @@ public class RobotMap {
 	public static int unwindButton = 4;
 	public static int shiftGearButton = 6;
 	public static int susanButton = 5;
-	
-	private static void modifyValues(RobotID r){
-		switch(r){
-			case ROBOT_2:
-				break; //Implement in the future
-			case ROBOT_3:
-				break; //Implement when we have a robot 3
-			default:
-				break;
-	
-	
-		}
-	}
 }
