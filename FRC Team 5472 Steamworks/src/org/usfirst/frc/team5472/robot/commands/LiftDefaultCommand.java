@@ -10,8 +10,7 @@ public class LiftDefaultCommand extends Command {
 	private Joystick j;
 	
 	public LiftDefaultCommand(){
-		requires(Robot.feederSubsystem);
-		
+		requires(Robot.liftSubsystem);
 	}
 	
 	
