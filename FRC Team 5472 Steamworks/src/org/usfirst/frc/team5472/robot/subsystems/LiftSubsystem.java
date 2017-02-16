@@ -2,6 +2,7 @@ package org.usfirst.frc.team5472.robot.subsystems;
 
 
 import org.usfirst.frc.team5472.robot.RobotMap;
+import org.usfirst.frc.team5472.robot.commands.LiftDefaultCommand;
 
 import com.ctre.CANTalon;
 
@@ -18,12 +19,14 @@ public class LiftSubsystem extends Subsystem {
 
 	public LiftSubsystem() {
 		super("Lift");
+		
+		this.liftMotor = new CANTalon(RobotMap.liftMotor);
+		this.liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
+		
 		Thread t = new Thread(() -> {
 			double current;
-			this.liftMotor = new CANTalon(RobotMap.liftMotor);
-			this.liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
 			while (DriverStation.getInstance().isEnabled()) {
-				current = liftMotor.getOutputCurrent();	
+				current = liftMotor.getOutputCurrent();
 				SmartDashboard.putNumber("Lift Current", current);
 				//Timer.delay(0.2);
 				try {
@@ -59,7 +62,6 @@ public class LiftSubsystem extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-
+		setDefaultCommand(new LiftDefaultCommand());
 	}
 }

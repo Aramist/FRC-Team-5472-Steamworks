@@ -1,7 +1,9 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
 import org.usfirst.frc.team5472.robot.RobotMap;
-import org.usfirst.frc.team5472.robot.commands.LazySusanCommand;
+import org.usfirst.frc.team5472.robot.commands.ShootCommand;
+
+import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,7 +14,7 @@ public class ShooterSubsystem extends Subsystem {
 	private VictorSP shooterMotor2; //smaller wheel will depend on different values
 	private VictorSP conveyor;
 	private VictorSP susanMotor;
-	private VictorSP agitatorMotor;
+	private CANTalon agitatorMotor;
 	
 	public ShooterSubsystem(){
 		super("Shoot");
@@ -20,12 +22,12 @@ public class ShooterSubsystem extends Subsystem {
 		shooterMotor2 = new VictorSP(RobotMap.shooterMotor2);
 		conveyor = new VictorSP(RobotMap.conveyor);
 		susanMotor = new VictorSP(RobotMap.susanMotor);
-		agitatorMotor = new VictorSP(RobotMap.agitatorMotor);
+		agitatorMotor = new CANTalon(RobotMap.agitatorMotor);
 	}
 	
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new LazySusanCommand());
+		setDefaultCommand(new ShootCommand());
 	}
 	
 	public void setShoot1(double d)

@@ -23,12 +23,13 @@ private Joystick j;
 	
 	@Override
 	public void execute(){
-		if (j.getRawButton(RobotMap.susanButton))//alternate idea - if boiler is recognized by camera & contingency plan is to have them be able to manually turn it
-		{
-			double x = (j.getRawButton(RobotMap.susanButton)) ? 0.3 : 0.0;//not sure how slowly it needs to be spin to allow the camera to register the boiler
-			//repeat this task until it is correctly oriented towards boiler
-			Robot.shootSubsystem.setSusanMotor(x);
-		}
+		double turn = 0.0;
+		int angle = j.getPOV();
+		if(angle == 90)
+			turn = 0.3;
+		else if(angle == 270)
+			turn = -0.3;
+		Robot.shootSubsystem.setSusanMotor(turn);
 		if (j.getRawButton(RobotMap.shootButton))
 		{
 			double x = (j.getRawButton(RobotMap.shootButton)) ? 0.4 : 0.0;	
@@ -47,6 +48,11 @@ private Joystick j;
 		Robot.shootSubsystem.setShoot2(0.0);
 		Robot.shootSubsystem.setSusanMotor(0.0);
 		Robot.shootSubsystem.setConveyor(0.0);
+	}
+	
+	@Override
+	public void interrupted(){
+		end();
 	}
 
 }

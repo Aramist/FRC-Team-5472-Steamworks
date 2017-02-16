@@ -21,7 +21,6 @@ public class Robot extends IterativeRobot {
 	public static final ShooterSubsystem shootSubsystem = new ShooterSubsystem();
 	
 	public static final OI oi = new OI();
-	public AnalogInput pressureSensor;
 	
 	SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
 	SendableChooser<AutonomousStarting> autonomousStarting = new SendableChooser<AutonomousStarting>();

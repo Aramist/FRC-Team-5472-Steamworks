@@ -6,10 +6,10 @@ import org.usfirst.frc.team5472.robot.RobotMap;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class LiftPositiveCommand extends Command {
-private Joystick j;
+public class LiftDefaultCommand extends Command {
+	private Joystick j;
 	
-	public LiftPositiveCommand(){
+	public LiftDefaultCommand(){
 		requires(Robot.feederSubsystem);
 		
 	}
@@ -25,8 +25,12 @@ private Joystick j;
 	
 	@Override
 	public void execute(){
-		if( j.getRawButton(RobotMap.liftButton));
-		Robot.liftSubsystem.setLift(0.6);//unsure of how this value will respond
+		if( j.getRawButton(RobotMap.unwindButton))
+			Robot.liftSubsystem.setLift(-0.5);//unsure of how this value will respond
+		else if(j.getRawButton(RobotMap.liftButton))
+			Robot.liftSubsystem.setLift(0.6);
+		else
+			Robot.liftSubsystem.setLift(0.0);
 	}
 	
 	@Override
