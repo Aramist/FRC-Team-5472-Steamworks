@@ -4,7 +4,6 @@ package org.usfirst.frc.team5472.robot;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
-import org.usfirst.frc.team5472.robot.subsystems.ShiftGearSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -12,7 +11,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
@@ -21,7 +19,6 @@ public class Robot extends IterativeRobot {
 	public static final FeederSubsystem feederSubsystem = new FeederSubsystem();
 	public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
 	public static final ShooterSubsystem shootSubsystem = new ShooterSubsystem();
-	public static final ShiftGearSubsystem shiftGearSubsystem = new ShiftGearSubsystem();
 	
 	public static final OI oi = new OI();
 	public AnalogInput pressureSensor;

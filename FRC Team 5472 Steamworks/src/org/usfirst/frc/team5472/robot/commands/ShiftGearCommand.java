@@ -4,7 +4,6 @@ import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.RobotMap;//is  this class necessary
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShiftGearCommand extends Command{
@@ -13,9 +12,6 @@ public class ShiftGearCommand extends Command{
 	
 	public ShiftGearCommand(){
 		requires(Robot.driveSubsystem);
-		
-		
-		
 	}
 	
 	@Override
@@ -29,7 +25,7 @@ public class ShiftGearCommand extends Command{
 	public void execute(){
 		if(j.getRawButton(RobotMap.shiftGearButton))
 		  Robot.driveSubsystem.switchSolenoid();
-	
+		
 	}
 	
 	@Override
@@ -37,6 +33,4 @@ public class ShiftGearCommand extends Command{
 		end();
 	}
 	
-	
-	}
-
+}

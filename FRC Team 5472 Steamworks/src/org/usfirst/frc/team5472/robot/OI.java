@@ -1,13 +1,6 @@
 package org.usfirst.frc.team5472.robot;//5472
 
-import org.usfirst.frc.team5472.robot.commands.CloggedFeederCommand;
-import org.usfirst.frc.team5472.robot.commands.FeedCommand;
-import org.usfirst.frc.team5472.robot.commands.LiftNegativeCommand;
-import org.usfirst.frc.team5472.robot.commands.LiftPositiveCommand;
-import org.usfirst.frc.team5472.robot.commands.ShootCommand;
-
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 	

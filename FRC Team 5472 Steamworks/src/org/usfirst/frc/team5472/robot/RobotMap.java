@@ -12,7 +12,6 @@ public class RobotMap {
 	}
 	
 	//Robot Measurements
-	public static double wheelBaseWidth = 0.60; //Meters
 	public static double wheelDiameter = 4.0 * 2.54; //Centimeters
 	
 	//DIO ports
@@ -21,43 +20,44 @@ public class RobotMap {
 	
 	public static int rightEncoderA = 2;
 	public static int rightEncoderB = 3;
-	
+
 	//PWM ports
 	//Drive motors
 	public static int frontLeftMotor = 2;
 	public static int frontRightMotor = 3;
-	public static int backLeftMotor = 2;
-	public static int backRightMotor = 3;
+	//public static int backLeftMotor = 2;
+	//public static int backRightMotor = 3;
+	
 	//Peripherals
 	public static int feederMotor = 0;
-
+	
 	public static int shooterMotor1 = 6;
 	public static int shooterMotor2 = 5;//there are now two motors for the shooter for better accuracy
 	public static int susanMotor = 1; //this is for the lazy-suzan
 	public static int liftMotor = 2;//Talon with a CAN bus for speed controller
-	public static int agitatorMotor = 3;
+	
+	public static int agitatorMotor = 3; //Talon ID
+	public static int conveyor = 4;
 	
 	//Pneumatics
 	public static int singleSolenoid0 = 0;
 	public static int doubSolenoid0 = 1;//there will be two solenoids to lift the feeder - check if present still or was for other bot
 	public static int liftSolenoid0 = 2;//there needs to be an additional solenoid that permits the lift mechanism to rotate backwards when necessary
+	public static int shiftGearSolenoid0 = 3;
 	//button ten - bot lift
 	//button nine - when solenoid is pressurized or depressurized (Justin wasn't sure) ~ go backwards
+	
 	//I2C Communications
 	public static int raspiI2CAddress = 0;
-	public static int shiftGearSolenoid0 = 3;
 	
 	//Controls
-	public static int shootButton = 1;//trigger in tha back
+	public static int shootButton = 1;//trigger in the back
 	public static int feederButton = 2; //Temporary
 	public static int emergencyFeedButton = 11;
 	public static int liftButton = 3;
 	public static int unwindButton = 4;
 	public static int shiftGearButton = 6;
 	public static int susanButton = 5;
-	
-	
-	public static int conveyor = 4;
 	
 	private static void modifyValues(RobotID r){
 		switch(r){

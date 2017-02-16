@@ -23,7 +23,7 @@ public class DriveWithJoystickCommand extends Command {
 		double throttle = j.getY();
 		double twist = j.getTwist() / 2.0;
 		
-		Robot.driveSubsystem.drive(throttle + twist, throttle - twist, throttle + twist, throttle - twist);
+		Robot.driveSubsystem.drive(throttle + twist, throttle - twist);
 	}
 
 	@Override
