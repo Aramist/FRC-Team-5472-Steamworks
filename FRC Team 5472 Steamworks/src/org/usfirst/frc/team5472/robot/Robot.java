@@ -7,6 +7,7 @@ import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 public class Robot extends IterativeRobot {
 
 	
-	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();//should these be static
+	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final FeederSubsystem feederSubsystem = new FeederSubsystem();
 	public static final LiftSubsystem liftSubsystem = new LiftSubsystem();
 	public static final ShooterSubsystem shootSubsystem = new ShooterSubsystem();
@@ -24,10 +25,22 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
 	SendableChooser<AutonomousStarting> autonomousStarting = new SendableChooser<AutonomousStarting>();
 	SendableChooser<Boolean> activateSafety = new SendableChooser<Boolean>();
-
+	
+	public static void rumble(boolean on){
+		rumble(true, on);
+	}
+	
+	public static void rumble(boolean heavy, boolean on) {
+		if (on)
+			oi.getXBOX().setRumble(!heavy ? RumbleType.kRightRumble : RumbleType.kLeftRumble, 1.0F);
+		else {
+			oi.getXBOX().setRumble(RumbleType.kLeftRumble, 0.0F);
+			oi.getXBOX().setRumble(RumbleType.kRightRumble, 0.0F);
+		}
+	}
+	
 	@Override
 	public void robotInit() {
-		//oi = new OI();
 		
 		//Configure the SendableChooser for whether an autonomous Command will be run
 		autonomousEnabled.addDefault("Enabled", new Boolean(true));

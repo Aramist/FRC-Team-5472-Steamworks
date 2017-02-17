@@ -30,13 +30,11 @@ private Joystick j;
 		else if(angle == 270)
 			turn = -0.3;
 		Robot.shootSubsystem.setSusanMotor(turn);
-		if (j.getRawButton(RobotMap.shootButton))
-		{
-			double x = (j.getRawButton(RobotMap.shootButton)) ? 0.4 : 0.0;	
-			Robot.shootSubsystem.setShoot1(x);// will most likely have some constant value
-			//double shoot; -> need to come up with a way to adjust speed based on driver input sensor
-			Robot.shootSubsystem.setShoot2(2*x);//arbitrary value ~ need to change depending on angle to boiler
-			//the smaller wheel will (hopefully) be in ratio to larger wheel, which is shoot1
+		
+		if(Robot.oi.getXBOX().getRawButton(RobotMap.shootX)){
+			double d = (Robot.oi.getXBOX().getRawAxis(RobotMap.fireAxisX) + 1.0) / 2.0;
+			Robot.shootSubsystem.setShoot1(d);
+			Robot.shootSubsystem.setShoot2(1.0);
 		}
 
 	}
