@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShootCommand extends Command {
-private Joystick j;
+private Joystick x;
 	
 	public ShootCommand(){
 		requires(Robot.shootSubsystem);
@@ -15,7 +15,7 @@ private Joystick j;
 	}
 	@Override
 	public void initialize(){
-		j = Robot.oi.getJoystick();
+		x = Robot.oi.getXBOX();
 	}
 	protected boolean isFinished() {
 		return false;
@@ -24,7 +24,7 @@ private Joystick j;
 	@Override
 	public void execute(){
 		double turn = 0.0;
-		int angle = j.getPOV();
+		int angle = x.getPOV();
 		if(angle == 90)
 			turn = 0.3;
 		else if(angle == 270)
