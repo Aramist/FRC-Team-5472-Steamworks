@@ -1,8 +1,11 @@
 from math import fabs, sqrt
 
 import cv2
+from networktables import NetworkTables as NT
 import numpy as np
 
+NT.initialize(server='roborio-5472-frc.local')
+table = NT.getTable('SmartDashboard')
 
 def blur(frame):
     return cv2.GaussianBlur(frame, (5,5), 0)
@@ -57,8 +60,7 @@ if __name__ == '__main__':
             print('Failed to read from Video Stream')
             #Send a message through network tables notifying the drivers that there is no vision
             break
-        print(run(frame))
-        #Send the value of run(frame) to networktables
+        table.putNumber('Boiler Dist', run(frame))
     
     #Hey that's pretty good
     #\t-Kyle
