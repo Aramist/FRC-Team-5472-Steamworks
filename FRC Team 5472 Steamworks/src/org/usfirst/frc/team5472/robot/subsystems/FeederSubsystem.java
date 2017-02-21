@@ -12,7 +12,7 @@ public class FeederSubsystem extends Subsystem{
 	public FeederSubsystem() {
 		super("Feeder");
 		this.feederMotor = new VictorSP(RobotMap.feederMotor);
-		
+		System.out.println("Initialized: Feed");
 	}
 	
 	public void setFeeder(double d){

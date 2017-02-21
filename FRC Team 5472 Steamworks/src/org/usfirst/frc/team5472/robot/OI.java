@@ -59,6 +59,7 @@ public class OI {
 		shiftGear.whenPressed(new ShiftGearCommand());
 		feedOut.whileHeld(new CloggedFeederCommand());
 		feedIn.whileHeld(new FeedCommand());
+		System.out.println("Initialized: OI");
 	}
 
 }

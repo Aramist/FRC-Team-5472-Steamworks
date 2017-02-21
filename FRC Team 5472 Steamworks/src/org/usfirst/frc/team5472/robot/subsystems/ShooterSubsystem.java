@@ -23,6 +23,7 @@ public class ShooterSubsystem extends Subsystem {
 		conveyor = new VictorSP(RobotMap.conveyor);
 		susanMotor = new VictorSP(RobotMap.susanMotor);
 		agitatorMotor = new VictorSP(RobotMap.agitatorMotor);
+		System.out.println("Initialized: Shoot");
 	}
 
 	@Override
