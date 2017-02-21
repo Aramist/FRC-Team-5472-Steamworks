@@ -38,28 +38,27 @@ public class OI {
 		//Joysticks
 		stick = new Joystick(0);
 		xbox = new Joystick(1);
-		
+
 		//XBOX Buttons
 		hacks = new JoystickButton(xbox, RobotMap.hacksX);
 		conveyor = new JoystickButton(xbox, RobotMap.conveyorX);
-		
+
 		//Joystick Buttons
-		
+
 		shiftGear = new JoystickButton(stick, RobotMap.shiftGearButton);
-		
+
 		feedOut = new JoystickButton(stick, RobotMap.feederButton);
 		feedIn = new JoystickButton(stick,RobotMap.emergencyFeedButton);
-	
+
 		//Initialize XBOX Buttons
 		hacks.whileHeld(new ShootCommand());
 		conveyor.whileHeld(new ConveyorCommand());
-		
+
 		//Initialize Joystick Buttons
-	
+
 		shiftGear.whenPressed(new ShiftGearCommand());
 		feedOut.whileHeld(new CloggedFeederCommand());
 		feedIn.whileHeld(new FeedCommand());
 	}
-	
-	
+
 }
