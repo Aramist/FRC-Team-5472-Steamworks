@@ -8,6 +8,7 @@ public class CloggedFeederCommand extends Command {
 
 	public CloggedFeederCommand() {
 		requires(Robot.feederSubsystem);
+		System.out.print("I'm working :)");
 	}
 
 	@Override

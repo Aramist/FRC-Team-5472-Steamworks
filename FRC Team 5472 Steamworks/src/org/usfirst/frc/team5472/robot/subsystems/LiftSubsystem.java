@@ -54,6 +54,10 @@ public class LiftSubsystem extends Subsystem {
 		setDefaultCommand(new LiftDefaultCommand());
 	}
 
+	public void switchLift() {
+		liftSolenoid0.set(!liftSolenoid0.get());
+	}
+
 	public void setLift(double d) {
 		if (d >= 0.0)
 			liftMotor.set(d);

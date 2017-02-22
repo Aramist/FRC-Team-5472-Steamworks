@@ -1,6 +1,10 @@
 package org.usfirst.frc.team5472.robot;//5472
 
+import org.usfirst.frc.team5472.robot.commands.ShiftGearCommand;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
 
@@ -25,6 +29,7 @@ public class OI {
 
 	//
 	// private JoystickButton feedOut;
+
 	// private JoystickButton feedIn;
 	//
 	public OI() {
@@ -32,9 +37,8 @@ public class OI {
 		stick = new Joystick(0);
 		xbox = new Joystick(1);
 
-		// Button shiftGear = new JoystickButton(stick,
-		// RobotMap.shiftGearButton);
-		// shiftGear.whenPressed(new ShiftGearCommand());
+		Button shiftGear = new JoystickButton(stick, RobotMap.climberShiftButton);
+		shiftGear.whenPressed(new ShiftGearCommand());
 
 		// XBOX Buttons
 		// hacks = new JoystickButton(xbox, RobotMap.hacksX);
@@ -53,7 +57,7 @@ public class OI {
 		//
 		// //Initialize Joystick Buttons
 		//
-		// shiftGear.whenPressed(new ShiftGearCommand());
+		shiftGear.whenPressed(new ShiftGearCommand());
 		// feedOut.whileHeld(new CloggedFeederCommand());
 		// feedIn.whileHeld(new FeedCommand());
 	}

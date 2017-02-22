@@ -16,6 +16,9 @@ public class LiftDefaultCommand extends Command {
 	@Override
 	public void initialize() {
 		j = Robot.oi.getJoystick();
+		if (j.getRawButton(RobotMap.liftSolenoid0)) {
+			Robot.liftSubsystem.switchLift();
+		}
 	}
 
 	@Override

@@ -4,49 +4,77 @@ import org.usfirst.frc.team5472.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class AutoLeftToLeft {
-
-	public AutoLeftToLeft() {
+public class AutoStationToSide {
+	// STARTING POSITION: line of loading station - I made it such that the
+	// Robot should be on the inner
+	// edge of the tape line (more in the center) than in the loading area.
+	// Check if this is working
+	public AutoStationToSide() {
 		// is it safe to be only using one encoder to
 		// detect distance? it may be better to fall short rather than go too
 		// far
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 147.47)
-			Robot.driveSubsystem.drive(0.3, 0.3);// drive forward 238.90732cm
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -215)
+			Robot.driveSubsystem.drive(-0.3, -0.3);// drive forward 215 cm
 
-		Robot.driveSubsystem.drive(-0.1, -0.1);// slow down
+		Robot.driveSubsystem.drive(0.1, 0.1);// slow down
 		Timer.delay(0.3);
-		Robot.driveSubsystem.drive(0, 0);// stop
+		Robot.driveSubsystem.stop();// stop
 
 		Robot.driveSubsystem.turnToHeading(-30);// turn right 30 degrees
 
 		Robot.driveSubsystem.getLeftEncoder().reset();
 		Robot.driveSubsystem.getRightEncoder().reset();
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 27.94)
-			Robot.driveSubsystem.drive(0.3, 0.3);// drive forward 80cm
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -88.9)
+			Robot.driveSubsystem.drive(-0.3, -0.3);// drive forward 88.9 cm to
+													// place gear
 
-		Robot.driveSubsystem.drive(-0.1, -0.1);
+		Robot.driveSubsystem.drive(0.1, 0.1);
 		Timer.delay(0.3);
-		Robot.driveSubsystem.drive(0.0, 0.0);
+		Robot.driveSubsystem.stop();
 		Timer.delay(3.3); // time for pilot to pick up gear
 
 		Robot.driveSubsystem.getLeftEncoder().reset();
 		Robot.driveSubsystem.getRightEncoder().reset();
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -35)
-			Robot.driveSubsystem.drive(-0.3, -0.3);// back up so won't run into
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 80)
+			Robot.driveSubsystem.drive(0.3, 0.3);// back up so won't run into
 													// side
-
-		Robot.driveSubsystem.turnToHeading(0);
+		Robot.driveSubsystem.drive(-0.1, -0.1);
+		Robot.driveSubsystem.stop();
+		Robot.driveSubsystem.turnToHeading(180);// turn to face opposing
+												// alliance
 
 		Robot.driveSubsystem.getLeftEncoder().reset();
 		Robot.driveSubsystem.getRightEncoder().reset();
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 80)
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 91)// drive
+																		// forward
+																		// to be
+																		// parallel
+																		// to
+																		// hopper
+
 			Robot.driveSubsystem.drive(0.3, 0.3);
 
 		Robot.driveSubsystem.drive(-0.1, -0.1);
-		Robot.driveSubsystem.drive(0.0, 0.0);
+		Robot.driveSubsystem.stop();
+
+		Robot.driveSubsystem.turnToHeading(270);// turn to face hopper
+
+		Robot.driveSubsystem.getLeftEncoder().reset();
+		Robot.driveSubsystem.getRightEncoder().reset();
+
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() < 93)// drive
+																		// to
+																		// slam
+																		// into
+																		// hopper
+
+			Robot.driveSubsystem.drive(0.3, 0.3);
+
+		Robot.driveSubsystem.drive(-0.1, -0.1);
+		Robot.driveSubsystem.stop();
 		// questionable to shoot into boiler from this range because of
 		// potential
 		// red/yellow card

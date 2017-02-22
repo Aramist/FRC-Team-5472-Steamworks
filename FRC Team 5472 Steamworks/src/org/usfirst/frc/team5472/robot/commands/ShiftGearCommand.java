@@ -7,11 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShiftGearCommand extends Command {
 
 	public ShiftGearCommand() {
-		requires(Robot.driveSubsystem);
+		// requires(Robot.driveSubsystem);
 	}
 
 	@Override
 	public void initialize() {
+		Robot.liftSubsystem.switchLift();
 	}
 
 	@Override
@@ -21,7 +22,6 @@ public class ShiftGearCommand extends Command {
 
 	@Override
 	public void execute() {
-		Robot.driveSubsystem.switchSolenoid();
 	}
 
 	@Override
