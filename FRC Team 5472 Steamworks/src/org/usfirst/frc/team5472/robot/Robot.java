@@ -80,16 +80,16 @@ public class Robot extends IterativeRobot {
 
 		// Configure the SendableChooser for whether an autonomous Command will
 		// be run
-		// autonomousEnabled.addDefault("Enabled", new Boolean(true));
-		// autonomousEnabled.addObject("Disabled", new Boolean(false));
+		autonomousEnabled.addDefault("Enabled", new Boolean(true));
+		autonomousEnabled.addObject("Disabled", new Boolean(false));
 		// Configure the SendableChooser for autonomous starting position
 		// selection
-		// autonomousStarting.addDefault("Center", AutonomousStarting.CENTER);
-		// autonomousStarting.addObject("Left", AutonomousStarting.LEFT);
-		// autonomousStarting.addObject("Right", AutonomousStarting.RIGHT);
+		autonomousStarting.addDefault("Center", AutonomousStarting.CENTER);
+		autonomousStarting.addObject("Left", AutonomousStarting.LEFT);
+		autonomousStarting.addObject("Right", AutonomousStarting.RIGHT);
 		// Configure the SendableChooser for activation of "safety" mode
-		// activateSafety.addDefault("Disabled", new Boolean(false));
-		// activateSafety.addDefault("Enabled", new Boolean(true));
+		activateSafety.addDefault("Disabled", new Boolean(false));
+		activateSafety.addDefault("Enabled", new Boolean(true));
 
 	}
 

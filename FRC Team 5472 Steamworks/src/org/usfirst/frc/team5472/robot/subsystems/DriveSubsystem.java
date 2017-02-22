@@ -5,14 +5,13 @@ import org.usfirst.frc.team5472.robot.commands.DriveWithJoystickCommand;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -52,7 +51,9 @@ public class DriveSubsystem extends Subsystem {
 	private VictorSP backLeft;
 	private VictorSP backRight;
 
-	private DoubleSolenoid shiftGearSolenoid;
+	private Solenoid shiftGearSolenoid0;
+	private Solenoid shiftGearSolenoid1;
+
 	// PID Outputs for both sides of the tank drivetrain
 	private PIDOutput anglePIDOutput;
 
@@ -85,6 +86,9 @@ public class DriveSubsystem extends Subsystem {
 		backLeft = new VictorSP(RobotMap.backLeftMotor);
 		backRight = new VictorSP(RobotMap.backRightMotor);
 
+		frontLeft.setInverted(true);
+		backLeft.setInverted(true);
+
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
 
@@ -102,13 +106,14 @@ public class DriveSubsystem extends Subsystem {
 		anglePIDController.setContinuous(true);
 		anglePIDController.setAbsoluteTolerance(10.0);
 
-		drivePIDController = new PIDController(kP_drive, kI_drive, kD_drive, kF_drive, new DriveWithVelocityPIDInput(),
-				driveOutput);
+		drivePIDController = new PIDController(kP_drive, kI_drive, kD_drive, kF_drive, new DriveWithVelocityPIDInput(), driveOutput);
 
 		leftEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
 		rightEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
 
-		shiftGearSolenoid = new DoubleSolenoid(RobotMap.shiftGearSolenoidF, RobotMap.shiftGearSolenoidR);
+		shiftGearSolenoid0 = new Solenoid(RobotMap.shiftGearSolenoid0);
+		shiftGearSolenoid1 = new Solenoid(RobotMap.shiftGearSolenoid1);
+
 		// Y'alll don't know what a real English class is
 		// \tAnna Darwish, 2017
 		System.out.println("Initialized: Drive");
@@ -126,8 +131,7 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void followTrajectory(Waypoint[] waypoints) {
-		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
-				Trajectory.Config.SAMPLES_HIGH, 0.05, 1.7, 2.0, 60.0);
+		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 0.05, 1.7, 2.0, 60.0);
 		Trajectory trajectory = Pathfinder.generate(waypoints, config);
 		TankModifier modifier = new TankModifier(trajectory);
 		modifier.modify(RobotMap.wheelBaseWidth);
@@ -168,7 +172,15 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public boolean isHighGear() {
-		return shiftGearSolenoid.get() == DoubleSolenoid.Value.kForward;
+		return !shiftGearSolenoid0.get();
+	}
+
+	public void setHighGear(boolean high) {
+		if (isHighGear() && high)
+			return;
+		if (!isHighGear() && !high)
+			return;
+		switchSolenoid();
 	}
 
 	public void stop() {
@@ -181,7 +193,8 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	public void switchSolenoid() {
-		shiftGearSolenoid.set(shiftGearSolenoid.get() == Value.kForward ? Value.kReverse : Value.kForward);
+		shiftGearSolenoid0.set(!shiftGearSolenoid0.get());
+		shiftGearSolenoid1.set(!shiftGearSolenoid1.get());
 	}
 
 	public void turnToHeading(double angle) {

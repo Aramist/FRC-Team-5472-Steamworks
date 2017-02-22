@@ -2,16 +2,20 @@ package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ShiftGearCommand extends Command {
+public class LiftShiftCommand extends Command {
+	private Joystick j;
 
-	public ShiftGearCommand() {
-		requires(Robot.driveSubsystem);
+	public LiftShiftCommand() {
+		requires(Robot.liftSubsystem);
 	}
 
 	@Override
 	public void initialize() {
+
+		j = Robot.oi.getJoystick();
 	}
 
 	@Override
@@ -21,12 +25,7 @@ public class ShiftGearCommand extends Command {
 
 	@Override
 	public void execute() {
-		Robot.driveSubsystem.switchSolenoid();
-	}
-
-	@Override
-	public void interrupted() {
-		end();
+		Robot.LiftSubsystem.setLift();
 	}
 
 }

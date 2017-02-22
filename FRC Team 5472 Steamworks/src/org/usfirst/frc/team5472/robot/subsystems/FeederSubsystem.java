@@ -6,20 +6,21 @@ import org.usfirst.frc.team5472.robot.commands.FeedCommand;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class FeederSubsystem extends Subsystem{
+public class FeederSubsystem extends Subsystem {
 	private VictorSP feederMotor;
-	
+
 	public FeederSubsystem() {
 		super("Feeder");
 		this.feederMotor = new VictorSP(RobotMap.feederMotor);
+		feederMotor.setInverted(true);
 		System.out.println("Initialized: Feed");
 	}
-	
-	public void setFeeder(double d){
+
+	public void setFeeder(double d) {
 		feederMotor.set(d);
 	}
-	
-	public void stop(){
+
+	public void stop() {
 		feederMotor.set(0.0);
 	}
 

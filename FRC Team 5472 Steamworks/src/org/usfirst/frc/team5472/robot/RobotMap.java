@@ -3,8 +3,7 @@ package org.usfirst.frc.team5472.robot;
 public class RobotMap {
 
 	private static enum XBOX {
-		A(1), B(2), X(3), Y(4), LSTICK(9), RSTICK(1), LB(5), RB(6), START(8), BACK(7), LYAXIS(1), LXAXIS(0), RYAXIS(
-				5), RXAXIS(4), RT(3), LT(2);
+		A(1), B(2), X(3), Y(4), LSTICK(9), RSTICK(1), LB(5), RB(6), START(8), BACK(7), LYAXIS(1), LXAXIS(0), RYAXIS(5), RXAXIS(4), RT(3), LT(2);
 		private int i;
 
 		private XBOX(int i) {
@@ -37,18 +36,19 @@ public class RobotMap {
 	// Peripherals
 	public static final int feederMotor = 5;
 
-	public static final int shooterMotor1 = 3; // TALON
-	public static final int shooterMotor2 = 2; // TALON
+	public static final int shooterMotor1 = 2; // TALON
+	public static final int shooterMotor2 = 3; // TALON
+	// Note to anyone who reads this: I switched the two motors
 	public static final int susanMotor = 6; // this is for the lazy-suzan
 	public static final int liftMotor = 4; // TALON
 
-	public static final int agitatorMotor = 7; // No longer a Talon TODO: FIX
-												// THIS
+	public static final int agitatorMotor = 7;
+	// THIS
 	public static final int conveyor = 4;
 
 	// Pneumatics
-	public static final int shiftGearSolenoidF = 0;
-	public static final int shiftGearSolenoidR = 1;// there will be two
+	public static final int shiftGearSolenoid0 = 0;
+	public static final int shiftGearSolenoid1 = 1;// there will be two
 													// solenoids to
 	// lift
 	// the feeder - check if present still
@@ -64,10 +64,10 @@ public class RobotMap {
 
 	// Drive Controls
 	public static final int feederButton = 1;
-	public static final int emergencyFeedButton = 2;
+	public static final int emergencyFeedButton = 5;
 	public static final int liftButton = 6;
 	public static final int unwindButton = 4;
-	public static final int shiftGearButton = 5;
+	public static final int shiftGearButton = 2;
 	public static final int climberShiftButton = 3;
 
 	// XBOX Controls
