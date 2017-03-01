@@ -37,10 +37,11 @@ public class RobotMap {
 	public static final int feederMotor = 5;
 
 	public static final int shooterMotor1 = 2; // TALON
-	public static final int shooterMotor2 = 3; // TALON
+	//public static final int shooterMotor2 = 3; // TALON
 	// Note to anyone who reads this: I switched the two motors
 	public static final int susanMotor = 6; // this is for the lazy-suzan
 	public static final int liftMotor = 4; // TALON
+	public static final int hoodMotor = 3;//no clue if this is correct
 
 	public static final int agitatorMotor = 7;
 	// THIS
@@ -49,7 +50,7 @@ public class RobotMap {
 	// Pneumatics
 	public static final int shiftGearSolenoid0 = 0;
 	public static final int shiftGearSolenoid1 = 1;// there will be two
-													// solenoids to
+	// solenoids to
 	// lift
 	// the feeder - check if present still
 	// or was for other bot
@@ -78,4 +79,8 @@ public class RobotMap {
 	public static final int reverseFeedX = XBOX.B.id();
 	public static final int susanManualLeftX = 180; // POV
 	public static final int susanManualRightX = 0; // POV
+
+	public static double agitatorSpeed = 0.7;
+	public static double conveyorSpeed = 0.45;
+	public static double shooterFlywheelSpeed = 0.67;
 }

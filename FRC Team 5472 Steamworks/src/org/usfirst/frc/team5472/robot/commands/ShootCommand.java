@@ -5,6 +5,7 @@ import org.usfirst.frc.team5472.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShootCommand extends Command {
 	private Joystick x;
@@ -15,37 +16,37 @@ public class ShootCommand extends Command {
 
 	@Override
 	public void end() {
-		Robot.shootSubsystem.setShoot1(0.0);
-		Robot.shootSubsystem.setShoot2(0.0);
-		Robot.shootSubsystem.setSusanMotor(0.0);
+		Robot.shootSubsystem.setShoot1(0.0);;
+		Robot.shootSubsystem.setSusanMotor(0.0);;
 		Robot.shootSubsystem.setConveyor(0.0);
 	}
 
 	@Override
 	public void execute() {
+		double hood = 0.0;
 		double turn = 0.0;
 		int angle = x.getPOV();
+		SmartDashboard.putNumber("XBOX POV",  angle);
 		if (angle == 90)
 			turn = 0.3;
 		else if (angle == 270)
 			turn = -0.3;
+		Robot.shootSubsystem.setHood(hood);
 		Robot.shootSubsystem.setSusanMotor(turn);
 
-		if (Robot.oi.getXBOX().getRawButton(RobotMap.shootX)) {
+		if (Robot.oi.getXBOX().getRawButton(RobotMap.shootX))
 			// double d = (Robot.oi.getXBOX().getRawAxis(RobotMap.fireAxisX) +
 			// 1.0) / 2.0;
-			Robot.shootSubsystem.setShoot1(0.575);
-			// Robot.shootSubsystem.setShoot2(0.5);
-		} else {
+			Robot.shootSubsystem.setShoot1(0.67);
+		// Robot.shootSubsystem.setShoot2(0.5);
+		else
 			Robot.shootSubsystem.setShoot1(0);
-			// Robot.shootSubsystem.setShoot2(0);
-		}
+		// Robot.shootSubsystem.setShoot2(0);
 
-		if (Robot.oi.getXBOX().getRawButton(RobotMap.conveyorX)) {
-			Robot.shootSubsystem.enableConveyor();
-		} else {
-			Robot.shootSubsystem.disableConveyor();
-		}
+		if (Robot.oi.getXBOX().getRawButton(RobotMap.conveyorX))
+			Robot.shootSubsystem.setConveyor(0.5);
+		else
+			Robot.shootSubsystem.setConveyor(0.0);
 
 	}
 
