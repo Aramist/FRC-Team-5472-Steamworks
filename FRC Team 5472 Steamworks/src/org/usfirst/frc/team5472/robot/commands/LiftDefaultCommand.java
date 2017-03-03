@@ -16,9 +16,6 @@ public class LiftDefaultCommand extends Command {
 	@Override
 	public void initialize() {
 		j = Robot.oi.getJoystick();
-		if (j.getRawButton(RobotMap.liftSolenoid0)) {
-			Robot.liftSubsystem.switchLift();
-		}
 	}
 
 	@Override
@@ -28,6 +25,11 @@ public class LiftDefaultCommand extends Command {
 
 	@Override
 	public void execute() {
+
+		if (j.getRawButton(RobotMap.climberShiftButton)) {
+			Robot.liftSubsystem.switchLift();
+		}
+
 		double x = 0;
 		if (j.getZ() < 0)
 			x = 0.5;
@@ -35,7 +37,7 @@ public class LiftDefaultCommand extends Command {
 			x = 1.0;
 
 		if (j.getRawButton(RobotMap.unwindButton))
-			Robot.liftSubsystem.setLift(-1 * x);
+			Robot.liftSubsystem.setLift(-x);
 		else if (j.getRawButton(RobotMap.liftButton))
 			Robot.liftSubsystem.setLift(x);
 		else

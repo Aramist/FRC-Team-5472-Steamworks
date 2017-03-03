@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
+import static org.usfirst.frc.team5472.robot.RobotMap.motorList;
+
+import org.usfirst.frc.team5472.robot.MotorInterface;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.DriveWithJoystickCommand;
 
@@ -12,8 +15,8 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
@@ -21,7 +24,7 @@ import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 
-public class DriveSubsystem extends Subsystem {
+public class DriveSubsystem extends Subsystem implements MotorInterface {
 
 	class DriveWithVelocityPIDInput implements PIDSource {
 		@Override
@@ -46,48 +49,39 @@ public class DriveSubsystem extends Subsystem {
 	}
 
 	protected AHRS navx = new AHRS(SPI.Port.kMXP);
-	private VictorSP frontLeft;
-	private VictorSP frontRight;
-	private VictorSP backLeft;
-	private VictorSP backRight;
+
+	private SpeedController frontLeft;
+	private SpeedController frontRight;
+	private SpeedController backLeft;
+	private SpeedController backRight;
 
 	private Solenoid shiftGearSolenoid0;
 	private Solenoid shiftGearSolenoid1;
 
-	// PID Outputs for both sides of the tank drivetrain
 	private PIDOutput anglePIDOutput;
-
 	private PIDOutput driveOutput;
-	// Encoders
-	private Encoder leftEncoder;
 
+	private Encoder leftEncoder;
 	private Encoder rightEncoder;
+
 	// Turning to an angle
 	// PID Constants
+	private PIDController anglePIDController;
 	private double kP_angle = 0.03;
 	private double kI_angle = 0.00;
 	private double kD_angle = 0.01;
 	private double kF_angle = 0.00;
 
-	private PIDController anglePIDController;
+	private PIDController drivePIDController;
 	private double kP_drive = 0.06;
 	private double kI_drive = 0.00;
 	private double kD_drive = 0.02;
 	private double kF_drive = 0.00;
 
-	private PIDController drivePIDController;
-
 	public DriveSubsystem() {
 		super("Drive");
 
-		// Initialize VictorSP objects belonging to drive train
-		frontLeft = new VictorSP(RobotMap.frontLeftMotor);
-		frontRight = new VictorSP(RobotMap.frontRightMotor);
-		backLeft = new VictorSP(RobotMap.backLeftMotor);
-		backRight = new VictorSP(RobotMap.backRightMotor);
-
-		frontLeft.setInverted(true);
-		backLeft.setInverted(true);
+		updateMotors();
 
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
@@ -116,7 +110,19 @@ public class DriveSubsystem extends Subsystem {
 
 		// Y'alll don't know what a real English class is
 		// \tAnna Darwish, 2017
-		System.out.println("Initialized: Drive");
+	}
+
+	@Override
+	public void updateMotors() {
+		frontLeft = motorList[RobotMap.frontLeftMotor];
+		frontRight = motorList[RobotMap.frontRightMotor];
+		backLeft = motorList[RobotMap.backLeftMotor];
+		backRight = motorList[RobotMap.backRightMotor];
+
+		frontLeft.setInverted(true);
+		backLeft.setInverted(true);
+		frontRight.setInverted(false);
+		backRight.setInverted(false);
 	}
 
 	public void drive(double left, double right) {
@@ -124,6 +130,10 @@ public class DriveSubsystem extends Subsystem {
 		backLeft.set(left);
 		frontRight.set(right);
 		backRight.set(right);
+	}
+
+	public void joystickDrive(double throttle, double twist) {
+
 	}
 
 	public void driveWithVelocity(double velocity) {
@@ -164,6 +174,11 @@ public class DriveSubsystem extends Subsystem {
 
 	public Encoder getRightEncoder() {
 		return rightEncoder;
+	}
+
+	public void resetEncoders() {
+		leftEncoder.reset();
+		rightEncoder.reset();
 	}
 
 	@Override

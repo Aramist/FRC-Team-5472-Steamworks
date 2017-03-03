@@ -22,16 +22,16 @@ public class FeedCommand extends Command {
 	@Override
 	public void execute() {
 		if (j.getRawButton(RobotMap.feederButton))
-			Robot.feederSubsystem.setFeeder(0.5);
+			Robot.feederSubsystem.enableFeeder();
 		else if (j.getRawButton(RobotMap.emergencyFeedButton))
-			Robot.feederSubsystem.setFeeder(-0.5);
+			Robot.feederSubsystem.reverseFeed();
 		else
-			Robot.feederSubsystem.setFeeder(0);
+			Robot.feederSubsystem.disableFeeder();
 	}
 
 	@Override
 	public void end() {
-		Robot.feederSubsystem.stop();
+		Robot.feederSubsystem.disableFeeder();
 	}
 
 	@Override

@@ -8,7 +8,6 @@ public class CloggedFeederCommand extends Command {
 
 	public CloggedFeederCommand() {
 		requires(Robot.feederSubsystem);
-		System.out.print("I'm working :)");
 	}
 
 	@Override
@@ -17,12 +16,12 @@ public class CloggedFeederCommand extends Command {
 
 	@Override
 	public void execute() {
-		Robot.feederSubsystem.setFeeder(-1.0);
+		Robot.feederSubsystem.reverseFeed();
 	}
 
 	@Override
 	public void end() {
-		Robot.feederSubsystem.stop();
+		Robot.feederSubsystem.disableFeeder();
 	}
 
 	@Override

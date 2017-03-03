@@ -6,18 +6,21 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ShiftGearCommand extends Command {
 
+	private boolean finished = false;
+
 	public ShiftGearCommand() {
-		// requires(Robot.driveSubsystem);
+
 	}
 
 	@Override
 	public void initialize() {
 		Robot.liftSubsystem.switchLift();
+		finished = true;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return false;
+		return finished;
 	}
 
 	@Override

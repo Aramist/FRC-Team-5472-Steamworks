@@ -1,49 +1,42 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
+import static org.usfirst.frc.team5472.robot.RobotMap.motorList;
+
+import org.usfirst.frc.team5472.robot.MotorInterface;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.ShootCommand;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-//to assure accuracy, two motors will be controlling the shooter
-public class ShooterSubsystem extends Subsystem {
+public class ShooterSubsystem extends Subsystem implements MotorInterface {
 
-	private CANTalon shooterMotor1; // one spins forwards, and one spins
-	// backwards - won't know until bot is
-	// wired; big wheel spinning at constant
-	// speed
-	//private CANTalon shooterMotor2; // smaller wheel will depend on different
-	// values
-	private VictorSP conveyor;
-	private VictorSP susanMotor;
-	private VictorSP agitatorMotor;
-	private VictorSP hood;
+	private CANTalon shooterMotor;
+	private SpeedController hoodMotor;
+	private SpeedController conveyorMotor;
+	private SpeedController susanMotor;
+	private SpeedController agitatorMotor;
 
 	public ShooterSubsystem() {
 		super("Shoot");
-		shooterMotor1 = new CANTalon(RobotMap.shooterMotor1);
-		//shooterMotor2 = new CANTalon(RobotMap.shooterMotor2);
-		conveyor = new VictorSP(RobotMap.conveyor);
-		susanMotor = new VictorSP(RobotMap.susanMotor);
-		agitatorMotor = new VictorSP(RobotMap.agitatorMotor);
-
-
-		//shooterMotor2.setInverted(true);
-		hood = new VictorSP(RobotMap.hoodMotor);
-
+		updateMotors();
 	}
 
-	public void disableConveyor() {
-		agitatorMotor.set(0.0);
-		conveyor.set(0.0);
-	}
+	@Override
+	public void updateMotors() {
+		shooterMotor = (CANTalon) motorList[RobotMap.shooterMotor];
+		hoodMotor = motorList[RobotMap.hoodMotor];
+		conveyorMotor = motorList[RobotMap.conveyorMotor];
+		susanMotor = motorList[RobotMap.susanMotor];
+		agitatorMotor = motorList[RobotMap.agitatorMotor];
 
-	public void enableConveyor() {
-		agitatorMotor.set(0.5);
-		conveyor.set(0.5);
+		shooterMotor.setInverted(false);
+		hoodMotor.setInverted(false);
+		conveyorMotor.setInverted(false);
+		susanMotor.setInverted(false);
+		agitatorMotor.setInverted(false);
 	}
 
 	@Override
@@ -52,36 +45,36 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public void setConveyor(double d) {
-		// agitatorMotor.set(0.7);
-		conveyor.set(d);
+		conveyorMotor.set(d);
 	}
 
-	/*public void setShoot2(double d) {
-		// agitatorMotor.set(0.7);
-		shooterMotor2.set(d);
-		// conveyor.set(0.3);
-	}*/
-	public void setHood(double d){
-		hood.set(d);
+	public void setHoodMotor(double d) {
+		hoodMotor.set(d);
 	}
 
-	public void setShoot1(double d) {
-		// agitatorMotor.set(0.7);// check value
-		shooterMotor1.set(d);
-		// conveyor.set(0.3);
+	public void setShooterMotor(double d) {
+		shooterMotor.set(d);
 	}
 
 	public void setSusanMotor(double d) {
-		// agitatorMotor.set(0.7);
 		susanMotor.set(d);
-		// conveyor.set(0.3);
+	}
+
+	public void setAgitatorMotor(double d) {
+		agitatorMotor.set(d);
+	}
+
+	public void configureShooterPID() {
+		shooterMotor.setPID(0.8, 0, 0.1);
+		shooterMotor.setSetpoint(12000);
+		shooterMotor.enable();
 	}
 
 	public void stop() {
 		agitatorMotor.set(0.0);
 		susanMotor.set(0.0);
-		conveyor.set(0.0);
-		shooterMotor1.set(0.0);
-		hood.set(0.0);
+		conveyorMotor.set(0.0);
+		shooterMotor.set(0.0);
+		hoodMotor.set(0.0);
 	}
 }

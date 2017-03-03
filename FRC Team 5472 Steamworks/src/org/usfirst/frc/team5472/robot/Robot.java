@@ -6,15 +6,18 @@ import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 
-	private enum AutonomousStarting {
+	private enum AutonomousOptions {
 		LEFT, RIGHT, CENTER;
 	}
 
@@ -37,26 +40,24 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
-	SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
+	private SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
 
-	SendableChooser<AutonomousStarting> autonomousStarting = new SendableChooser<AutonomousStarting>();
+	private SendableChooser<AutonomousOptions> autonomousStarting = new SendableChooser<AutonomousOptions>();
 
-	SendableChooser<Boolean> activateSafety = new SendableChooser<Boolean>();
+	private SendableChooser<Boolean> afterGear = new SendableChooser<Boolean>();
 
+	private Command autonomousCommand = null;
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public void autonomousInit() {
-		// AutonomousStarting startingPosition =
-		// autonomousStarting.getSelected();
-		// boolean runningAutonomous =
-		// autonomousEnabled.getSelected().booleanValue();
-		// boolean safetyEnabled = activateSafety.getSelected().booleanValue();
-		// TODO: Autonomous
-		// reset encoder and have the motors drive forward until the getDistance
-		// method returns the
-		// determined value but first we must determine the equivalent distance
-		// per "pulse" of the encoder
-		// make an array for all the encoders & use .start() method before you
-		// can get distance
+		boolean b = ((SendableChooser<Boolean>) SmartDashboard.getData("Is Autonomous Enabled?")).getSelected();
+		AutonomousOptions starting = ((SendableChooser<AutonomousOptions>) SmartDashboard.getData("Starting Position")).getSelected();
+		boolean after = ((SendableChooser<Boolean>) SmartDashboard.getData("After Placing a Gear:")).getSelected();
+
+		System.out.println(b);
+		System.out.println(starting);
+		System.out.println(after);
 	}
 
 	@Override
@@ -77,25 +78,26 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void robotInit() {
+		autonomousEnabled.addDefault("Run autonomous", new Boolean(true));
+		autonomousEnabled.addObject("Do nothing", new Boolean(false));
 
-		// Configure the SendableChooser for whether an autonomous Command will
-		// be run
-		autonomousEnabled.addDefault("Enabled", new Boolean(true));
-		autonomousEnabled.addObject("Disabled", new Boolean(false));
-		// Configure the SendableChooser for autonomous starting position
-		// selection
-		autonomousStarting.addDefault("Center", AutonomousStarting.CENTER);
-		autonomousStarting.addObject("Left", AutonomousStarting.LEFT);
-		autonomousStarting.addObject("Right", AutonomousStarting.RIGHT);
-		// Configure the SendableChooser for activation of "safety" mode
-		activateSafety.addDefault("Disabled", new Boolean(false));
-		activateSafety.addDefault("Enabled", new Boolean(true));
+		autonomousStarting.addDefault("Center", AutonomousOptions.CENTER);
+		autonomousStarting.addObject("Left", AutonomousOptions.LEFT);
+		autonomousStarting.addObject("Right", AutonomousOptions.RIGHT);
 
+		afterGear.addDefault("Do nothing", new Boolean(false));
+		afterGear.addObject("Shoot (WIP)", new Boolean(true));
+
+		SmartDashboard.putData("Is Autonomous Enabled?", autonomousEnabled);
+		SmartDashboard.putData("Starting Position", autonomousStarting);
+		SmartDashboard.putData("After Placing a Gear:", afterGear);
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	@Override
 	public void teleopInit() {
-		// TODO: Cancel Autonomous
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
+import static org.usfirst.frc.team5472.robot.RobotMap.motorList;
+
+import org.usfirst.frc.team5472.robot.MotorInterface;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.LiftDefaultCommand;
 
@@ -10,7 +13,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class LiftSubsystem extends Subsystem {
+public class LiftSubsystem extends Subsystem implements MotorInterface {
 	private CANTalon liftMotor;
 
 	private Solenoid liftSolenoid0;
@@ -18,10 +21,11 @@ public class LiftSubsystem extends Subsystem {
 	public LiftSubsystem() {
 		super("Lift");
 
-		this.liftMotor = new CANTalon(RobotMap.liftMotor);
+		updateMotors();
+
 		this.liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
 
-		Thread t = new Thread(() -> {
+		new Thread(() -> {
 			double current;
 			while (DriverStation.getInstance().isEnabled()) {
 				current = liftMotor.getOutputCurrent();
@@ -39,14 +43,14 @@ public class LiftSubsystem extends Subsystem {
 					SmartDashboard.putString("LiftSolenoid", "UNWIND");// check
 
 				if (current > 20)
-					SmartDashboard.putString("LiftMonitor", "CURRENT TOO HIGH");// Aramis,
-
-				// here
+					SmartDashboard.putString("LiftMonitor", "CURRENT TOO HIGH");
 			}
+		}).start();
+	}
 
-		});
-		t.start();
-		System.out.println("Initialized: Lift");
+	@Override
+	public void updateMotors() {
+		liftMotor = (CANTalon) motorList[RobotMap.liftMotor];
 	}
 
 	@Override

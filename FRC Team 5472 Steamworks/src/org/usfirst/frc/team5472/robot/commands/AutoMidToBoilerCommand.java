@@ -7,13 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 
 //when the boiler is on right and starting from inner line of overflow loading station
 public class AutoMidToBoilerCommand extends Command {
-	public AutoMidToBoilerCommand() {
+
+	private boolean finished;
+	private boolean cont;
+
+	public AutoMidToBoilerCommand(boolean cont) {
 		requires(Robot.driveSubsystem);
+		this.cont = cont;
+		this.finished = false;
 	}
+
 	@Override
 	public void end() {
 		Robot.driveSubsystem.stop();
 	}
+
 	@Override
 	public void execute() {
 		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -10.4315)
@@ -47,7 +55,6 @@ public class AutoMidToBoilerCommand extends Command {
 
 		Robot.driveSubsystem.drive(0, 0);// stop
 
-
 		Robot.driveSubsystem.turnToHeading(60);// turn to be facing lift
 
 		Robot.driveSubsystem.getLeftEncoder().reset();
@@ -62,23 +69,28 @@ public class AutoMidToBoilerCommand extends Command {
 		// time for pilot to pick up gear
 		Robot.driveSubsystem.stop();
 
-		// add shooting
+		if (!cont) {
+			finished = true;
+			return;
+		}
+
+		finished = true;
 	}
 
 	@Override
 	public void initialize() {
-		//do I put anything here?
+		// do I put anything here?
 	}
 
 	@Override
 	public void interrupted() {
 		end();
 	}
+
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return false;
+		return finished;
 	}
 
 }
-

@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ConveyorCommand extends Command {
 
 	public ConveyorCommand() {
-		requires(Robot.shootSubsystem);
 	}
 
 	@Override
