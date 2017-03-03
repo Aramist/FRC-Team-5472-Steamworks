@@ -2,6 +2,8 @@ package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,11 +12,15 @@ public class AutoMidToBoilerCommand extends Command {
 
 	private boolean finished;
 	private boolean cont;
+	private boolean isBlue;
+	private int angleMultiplier;
 
 	public AutoMidToBoilerCommand(boolean cont) {
 		requires(Robot.driveSubsystem);
 		this.cont = cont;
 		this.finished = false;
+		this.isBlue = DriverStation.getInstance().getAlliance() == Alliance.Blue;
+		this.angleMultiplier = isBlue ? -1 : 1;
 	}
 
 	@Override
@@ -30,10 +36,9 @@ public class AutoMidToBoilerCommand extends Command {
 		Timer.delay(0.3);
 
 		Robot.driveSubsystem.drive(0, 0);// stop
-		Robot.driveSubsystem.turnToHeading(-90);// turn right 90 degrees
-
-		Robot.driveSubsystem.getLeftEncoder().reset();
-		Robot.driveSubsystem.getRightEncoder().reset();
+		Robot.driveSubsystem.turnToHeading(angleMultiplier * -90);
+		// turn right 90 degrees
+		Robot.driveSubsystem.resetEncoders();
 
 		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -110.39)
 			Robot.driveSubsystem.drive(-0.3, -0.3);
@@ -43,9 +48,8 @@ public class AutoMidToBoilerCommand extends Command {
 
 		Robot.driveSubsystem.drive(0, 0);// stop
 
-		Robot.driveSubsystem.turnToHeading(0);
-		Robot.driveSubsystem.getLeftEncoder().reset();
-		Robot.driveSubsystem.getRightEncoder().reset();
+		Robot.driveSubsystem.turnToHeading(angleMultiplier * 0);
+		Robot.driveSubsystem.resetEncoders();
 
 		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -117.94)
 			Robot.driveSubsystem.drive(-0.3, -0.3);
@@ -55,10 +59,10 @@ public class AutoMidToBoilerCommand extends Command {
 
 		Robot.driveSubsystem.drive(0, 0);// stop
 
-		Robot.driveSubsystem.turnToHeading(60);// turn to be facing lift
+		Robot.driveSubsystem.turnToHeading(angleMultiplier * 60);
+		// turn to be facing lift
 
-		Robot.driveSubsystem.getLeftEncoder().reset();
-		Robot.driveSubsystem.getRightEncoder().reset();
+		Robot.driveSubsystem.resetEncoders();
 
 		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -55.88)
 			Robot.driveSubsystem.drive(-0.3, -0.3);

@@ -2,21 +2,31 @@ package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AutoKeyToSideCommand extends Command{
+public class AutoKeyToSideCommand extends Command {
 	// STARTING POSITION: Inner line of key for boiler
+
+	private boolean finished;
+	private boolean isBlue;
+	private int angleMultiplier;
+
 	public AutoKeyToSideCommand() {
 		requires(Robot.driveSubsystem);
+		isBlue = DriverStation.getInstance().getAlliance() == Alliance.Blue;
+		angleMultiplier = isBlue ? -1 : 1;
 	}
+
 	@Override
 	public void end() {
 		Robot.driveSubsystem.stop();
 	}
 
 	@Override
-	public void execute(){
+	public void execute() {
 		// Note: some of the commands may seem a tad "inverted" or backwards in
 		// this - it's because
 		// we treat the front of the robot as the feed, so we're backwards in
@@ -28,7 +38,8 @@ public class AutoKeyToSideCommand extends Command{
 		Timer.delay(0.3);
 		Robot.driveSubsystem.drive(0, 0);// stop
 
-		Robot.driveSubsystem.turnToHeading(30);// turn left 30 degrees
+		Robot.driveSubsystem.turnToHeading(angleMultiplier * 30);
+		// turn left 30 degrees
 
 		Robot.driveSubsystem.getLeftEncoder().reset();
 		Robot.driveSubsystem.getRightEncoder().reset();
@@ -42,10 +53,12 @@ public class AutoKeyToSideCommand extends Command{
 		// time for pilot to pick up gear
 		Robot.driveSubsystem.stop();
 		// add shooting
+		finished = true;
 	}
+
 	@Override
 	public void initialize() {
-		//do I put anything here?
+		// do I put anything here?
 	}
 
 	@Override
@@ -55,7 +68,6 @@ public class AutoKeyToSideCommand extends Command{
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return false;
+		return finished;
 	}
 }
