@@ -13,9 +13,9 @@ public class ShootCommand extends Command implements Updatable {
 
 	private double shooterSpeed;
 	private double conveyorSpeed;
+
 	private double agitatorSpeed;
 	private double susanSpeed;
-	private double hoodSpeed;
 
 	public ShootCommand() {
 		requires(Robot.shootSubsystem);
@@ -24,39 +24,30 @@ public class ShootCommand extends Command implements Updatable {
 
 	@Override
 	public void updateValues() {
-		shooterSpeed = SmartDashboard.getNumber("Shooter Speed", 0.67);
-		conveyorSpeed = SmartDashboard.getNumber("Conveyor Speed", 0.6);
-		agitatorSpeed = SmartDashboard.getNumber("Agitator Speed", 0.7);
-		hoodSpeed = SmartDashboard.getNumber("Hood Speed", 0.1);
-		susanSpeed = SmartDashboard.getNumber("Turret Speed", 0.3);
+		shooterSpeed = -0.55;
+		conveyorSpeed = 0.45;
+		agitatorSpeed = 0.75;
+		susanSpeed = 0.1;
 	}
 
 	@Override
 	public void end() {
-		Robot.shootSubsystem.setShooterMotor(0.0);
-		Robot.shootSubsystem.setSusanMotor(0.0);
-		Robot.shootSubsystem.setConveyor(0.0);
-		Robot.shootSubsystem.setHoodMotor(0.0);
+		Robot.shootSubsystem.stop();
 	}
 
 	@Override
 	public void execute() {
-		double hood = 0.0;
+
+		SmartDashboard.putNumber("Shooter Speed: ", shooterSpeed);
+
 		double turn = 0.0;
 		int angle = x.getPOV();
 		SmartDashboard.putNumber("Xbox POV Angle", angle);
-
-		if (angle == 0)
-			turn = hoodSpeed;
-		else if (angle == 180)
-			turn = -hoodSpeed;
 
 		if (angle == 90)
 			turn = susanSpeed;
 		else if (angle == 270)
 			turn = -susanSpeed;
-
-		Robot.shootSubsystem.setHoodMotor(hood);
 		Robot.shootSubsystem.setSusanMotor(turn);
 
 		if (Robot.oi.getXBOX().getRawButton(RobotMap.shootX))
@@ -67,6 +58,9 @@ public class ShootCommand extends Command implements Updatable {
 		if (Robot.oi.getXBOX().getRawButton(RobotMap.conveyorX)) {
 			Robot.shootSubsystem.setConveyor(conveyorSpeed);
 			Robot.shootSubsystem.setAgitatorMotor(agitatorSpeed);
+		} else if (Robot.oi.getXBOX().getRawButton(RobotMap.reverseFeedX)) {
+			Robot.shootSubsystem.setConveyor(-conveyorSpeed);
+			Robot.shootSubsystem.setAgitatorMotor(-agitatorSpeed);
 		} else {
 			Robot.shootSubsystem.setConveyor(0.0);
 			Robot.shootSubsystem.setAgitatorMotor(0.0);

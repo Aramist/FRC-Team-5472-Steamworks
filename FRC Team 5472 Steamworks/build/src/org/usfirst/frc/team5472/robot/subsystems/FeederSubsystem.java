@@ -18,8 +18,10 @@ public class FeederSubsystem extends Subsystem implements MotorInterface, Updata
 
 	public FeederSubsystem() {
 		super("Feeder");
+		System.out.println("Feeder");
 		updateMotors();
 		updateValues();
+		System.out.println("Feeder");
 	}
 
 	@Override

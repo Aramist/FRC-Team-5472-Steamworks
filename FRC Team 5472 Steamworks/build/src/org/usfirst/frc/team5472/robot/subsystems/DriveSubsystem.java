@@ -48,7 +48,7 @@ public class DriveSubsystem extends Subsystem implements MotorInterface {
 		}
 	}
 
-	protected AHRS navx = new AHRS(SPI.Port.kMXP);
+	public AHRS navx = new AHRS(SPI.Port.kMXP);
 
 	private SpeedController frontLeft;
 	private SpeedController frontRight;
@@ -80,9 +80,11 @@ public class DriveSubsystem extends Subsystem implements MotorInterface {
 
 	public DriveSubsystem() {
 		super("Drive");
+		System.out.println("Drive");
 
 		updateMotors();
 
+		System.out.println("Drive");
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
 
@@ -110,6 +112,7 @@ public class DriveSubsystem extends Subsystem implements MotorInterface {
 
 		// Y'alll don't know what a real English class is
 		// \tAnna Darwish, 2017
+		System.out.println("Drive");
 	}
 
 	@Override
@@ -223,6 +226,12 @@ public class DriveSubsystem extends Subsystem implements MotorInterface {
 		if (autostop)
 			while (!anglePIDController.onTarget())
 				Timer.delay(0.05);
+	}
+
+	public void driveWithHeading(double throttle, double angle) {
+		drive(throttle, throttle);
+		anglePIDController.setSetpoint(angle);
+		anglePIDController.enable();
 	}
 
 	public void turnToHeading(double angle, double time) {

@@ -14,26 +14,32 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class ShooterSubsystem extends Subsystem implements MotorInterface {
 
 	private CANTalon shooterMotor;
-	private SpeedController hoodMotor;
 	private SpeedController conveyorMotor;
 	private SpeedController susanMotor;
 	private SpeedController agitatorMotor;
 
+	private void print(int... i) {
+		for (int j : i)
+			System.out.print("" + j + "  ");
+	}
+
 	public ShooterSubsystem() {
 		super("Shoot");
+		System.out.println("Shooter");
 		updateMotors();
+		System.out.println("shooter");
 	}
 
 	@Override
 	public void updateMotors() {
 		shooterMotor = (CANTalon) motorList[RobotMap.shooterMotor];
-		hoodMotor = motorList[RobotMap.hoodMotor];
 		conveyorMotor = motorList[RobotMap.conveyorMotor];
 		susanMotor = motorList[RobotMap.susanMotor];
 		agitatorMotor = motorList[RobotMap.agitatorMotor];
 
+		print(RobotMap.shooterMotor, RobotMap.conveyorMotor, RobotMap.susanMotor, RobotMap.agitatorMotor);
+
 		shooterMotor.setInverted(false);
-		hoodMotor.setInverted(false);
 		conveyorMotor.setInverted(false);
 		susanMotor.setInverted(false);
 		agitatorMotor.setInverted(false);
@@ -46,10 +52,6 @@ public class ShooterSubsystem extends Subsystem implements MotorInterface {
 
 	public void setConveyor(double d) {
 		conveyorMotor.set(d);
-	}
-
-	public void setHoodMotor(double d) {
-		hoodMotor.set(d);
 	}
 
 	public void setShooterMotor(double d) {
@@ -75,6 +77,5 @@ public class ShooterSubsystem extends Subsystem implements MotorInterface {
 		susanMotor.set(0.0);
 		conveyorMotor.set(0.0);
 		shooterMotor.set(0.0);
-		hoodMotor.set(0.0);
 	}
 }

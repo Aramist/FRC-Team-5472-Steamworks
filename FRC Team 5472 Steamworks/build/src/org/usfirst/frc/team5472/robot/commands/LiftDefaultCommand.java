@@ -27,19 +27,15 @@ public class LiftDefaultCommand extends Command {
 	public void execute() {
 
 		if (j.getRawButton(RobotMap.climberShiftButton)) {
-			Robot.liftSubsystem.switchLift();
+			Robot.liftSubsystem.setLift(true);
+		} else {
+			Robot.liftSubsystem.setLift(false);
 		}
 
-		double x = 0;
-		if (j.getZ() < 0)
-			x = 0.5;
-		else
-			x = 1.0;
-
 		if (j.getRawButton(RobotMap.unwindButton))
-			Robot.liftSubsystem.setLift(-x);
+			Robot.liftSubsystem.setLift(-1);
 		else if (j.getRawButton(RobotMap.liftButton))
-			Robot.liftSubsystem.setLift(x);
+			Robot.liftSubsystem.setLift(1);
 		else
 			Robot.liftSubsystem.setLift(0.0);
 	}

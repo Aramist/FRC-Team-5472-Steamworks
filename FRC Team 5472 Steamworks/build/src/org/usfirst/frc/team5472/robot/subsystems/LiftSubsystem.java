@@ -20,7 +20,7 @@ public class LiftSubsystem extends Subsystem implements MotorInterface {
 
 	public LiftSubsystem() {
 		super("Lift");
-
+		System.out.println("Lift");
 		updateMotors();
 
 		this.liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
@@ -46,6 +46,7 @@ public class LiftSubsystem extends Subsystem implements MotorInterface {
 					SmartDashboard.putString("LiftMonitor", "CURRENT TOO HIGH");
 			}
 		}).start();
+		System.out.println("Lift");
 	}
 
 	@Override
@@ -58,18 +59,11 @@ public class LiftSubsystem extends Subsystem implements MotorInterface {
 		setDefaultCommand(new LiftDefaultCommand());
 	}
 
-	public void switchLift() {
-		liftSolenoid0.set(!liftSolenoid0.get());
+	public void setLift(boolean b) {
+		liftSolenoid0.set(b);
 	}
 
 	public void setLift(double d) {
-		if (d >= 0.0)
-			liftMotor.set(d);
-		else {
-			// trigger solenoid to depressurize or pressurize so it can release
-			// the robot
-			liftSolenoid0.set(false);
-			liftMotor.set(d);
-		}
+		liftMotor.set(d);
 	}
 }
