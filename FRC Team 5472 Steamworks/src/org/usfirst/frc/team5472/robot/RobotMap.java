@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5472.robot;
 
-import edu.wpi.first.wpilibj.SpeedController;
-
 public class RobotMap {
 
 	private static enum XBOX {
@@ -17,8 +15,6 @@ public class RobotMap {
 		}
 	}
 
-	public static SpeedController[] motorList = new SpeedController[13];
-
 	// Robot Measurements
 	public static final double wheelBaseWidth = 29.75 * 2.54 * 1e-2;
 	public static final double wheelDiameter = 4.0 * 2.54; // Centimeters
@@ -31,18 +27,18 @@ public class RobotMap {
 	public static final int rightEncoderB = 3;
 
 	// Drive motors
-	public static int frontLeftMotor = 0;
+	public static int frontLeftMotor = 2;
 	public static int frontRightMotor = 0;
-	public static int backLeftMotor = 0;
-	public static int backRightMotor = 0;
-	public static int feederMotor = 0;
-	public static int agitatorMotor = 0;
-	public static int conveyorMotor = 0;
+	public static int backLeftMotor = 3;
+	public static int backRightMotor = 1;
+	public static int feederMotor = 5;
+	public static int agitatorMotor = 7;
+	public static int conveyorMotor = 4;
 
 	// Talons
-	public static int susanMotor = 0;
-	public static int liftMotor = 0;
-	public static int shooterMotor = 0;
+	public static int susanMotor = 3;
+	public static int liftMotor = 4;
+	public static int shooterMotor = 2;
 
 	// Pneumatics
 	public static final int shiftGearSolenoid0 = 4;
@@ -74,29 +70,4 @@ public class RobotMap {
 	public static double conveyorSpeed = 0.45;
 	public static double shooterFlywheelSpeed = 0.67;
 
-	public static void updatePWM() {
-		int fr = 0;
-		int fl = 2;
-		int br = 1;
-		int bl = 3;
-
-		int fe = 5;
-		int ag = 7;
-		int co = 4;
-
-		int li = 4;
-		int sh = 2;
-		int su = 3;
-
-		frontRightMotor = fr;
-		frontLeftMotor = fl;
-		backRightMotor = br;
-		backLeftMotor = bl;
-		feederMotor = fe;
-		agitatorMotor = ag;
-		conveyorMotor = co;
-		liftMotor = li + 8;
-		shooterMotor = sh + 8;
-		susanMotor = su + 8;
-	}
 }

@@ -24,14 +24,17 @@ public class AutoMidToMidCommand extends Command {
 
 	@Override
 	public void execute() {
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -175.26)
-			Robot.driveSubsystem.drive(-0.3, -0.3);// drive forward 175.26 cm
 
+		Robot.driveSubsystem.driveWithHeading(-0.3, 0);
+		// drive forward 175.26 cm
+		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -175.26)
+			;
 		Robot.driveSubsystem.drive(0.1, 0.1);// slow down
 		Timer.delay(0.3);
 		Robot.driveSubsystem.drive(0, 0);// stop
 		Robot.driveSubsystem.stop();
 		// time for robot to fully stop and for pilot to pick up gear
+
 		if (!cont) {
 			finished = true;
 			return;

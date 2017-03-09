@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
-import static org.usfirst.frc.team5472.robot.RobotMap.motorList;
-
-import org.usfirst.frc.team5472.robot.MotorInterface;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.DriveWithJoystickCommand;
 
@@ -17,6 +14,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
@@ -24,13 +22,14 @@ import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 
-public class DriveSubsystem extends Subsystem implements MotorInterface {
+public class DriveSubsystem extends Subsystem {
 
 	class DriveWithVelocityPIDInput implements PIDSource {
+		private PIDSourceType type = null;
+
 		@Override
 		public PIDSourceType getPIDSourceType() {
-			// TODO Auto-generated method stub
-			return null;
+			return type;
 		}
 
 		@Override
@@ -43,8 +42,7 @@ public class DriveSubsystem extends Subsystem implements MotorInterface {
 
 		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
-			// TODO Auto-generated method stub
-
+			type = pidSource;
 		}
 	}
 
@@ -80,11 +78,17 @@ public class DriveSubsystem extends Subsystem implements MotorInterface {
 
 	public DriveSubsystem() {
 		super("Drive");
-		System.out.println("Drive");
 
-		updateMotors();
+		frontLeft = new VictorSP(RobotMap.frontLeftMotor);
+		frontRight = new VictorSP(RobotMap.frontRightMotor);
+		backLeft = new VictorSP(RobotMap.backLeftMotor);
+		backRight = new VictorSP(RobotMap.backRightMotor);
 
-		System.out.println("Drive");
+		frontLeft.setInverted(true);
+		backLeft.setInverted(true);
+		frontRight.setInverted(false);
+		backRight.setInverted(false);
+
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
 
@@ -113,19 +117,6 @@ public class DriveSubsystem extends Subsystem implements MotorInterface {
 		// Y'alll don't know what a real English class is
 		// \tAnna Darwish, 2017
 		System.out.println("Drive");
-	}
-
-	@Override
-	public void updateMotors() {
-		frontLeft = motorList[RobotMap.frontLeftMotor];
-		frontRight = motorList[RobotMap.frontRightMotor];
-		backLeft = motorList[RobotMap.backLeftMotor];
-		backRight = motorList[RobotMap.backRightMotor];
-
-		frontLeft.setInverted(true);
-		backLeft.setInverted(true);
-		frontRight.setInverted(false);
-		backRight.setInverted(false);
 	}
 
 	public void drive(double left, double right) {

@@ -1,8 +1,5 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
-import static org.usfirst.frc.team5472.robot.RobotMap.motorList;
-
-import org.usfirst.frc.team5472.robot.MotorInterface;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.LiftDefaultCommand;
 
@@ -13,15 +10,15 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class LiftSubsystem extends Subsystem implements MotorInterface {
+public class LiftSubsystem extends Subsystem {
 	private CANTalon liftMotor;
 
 	private Solenoid liftSolenoid0;
 
 	public LiftSubsystem() {
 		super("Lift");
-		System.out.println("Lift");
-		updateMotors();
+
+		liftMotor = new CANTalon(RobotMap.liftMotor);
 
 		this.liftSolenoid0 = new Solenoid(RobotMap.liftSolenoid0);
 
@@ -47,11 +44,6 @@ public class LiftSubsystem extends Subsystem implements MotorInterface {
 			}
 		}).start();
 		System.out.println("Lift");
-	}
-
-	@Override
-	public void updateMotors() {
-		liftMotor = (CANTalon) motorList[RobotMap.liftMotor];
 	}
 
 	@Override

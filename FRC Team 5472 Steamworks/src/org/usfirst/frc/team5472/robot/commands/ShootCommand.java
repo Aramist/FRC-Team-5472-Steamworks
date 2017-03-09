@@ -2,13 +2,12 @@ package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.RobotMap;
-import org.usfirst.frc.team5472.robot.Updatable;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ShootCommand extends Command implements Updatable {
+public class ShootCommand extends Command {
 	private Joystick x;
 
 	private double shooterSpeed;
@@ -19,11 +18,7 @@ public class ShootCommand extends Command implements Updatable {
 
 	public ShootCommand() {
 		requires(Robot.shootSubsystem);
-		updateValues();
-	}
 
-	@Override
-	public void updateValues() {
 		shooterSpeed = -0.55;
 		conveyorSpeed = 0.45;
 		agitatorSpeed = 0.75;

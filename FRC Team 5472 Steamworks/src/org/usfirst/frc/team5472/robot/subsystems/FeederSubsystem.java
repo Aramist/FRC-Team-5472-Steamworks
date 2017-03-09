@@ -1,37 +1,21 @@
 package org.usfirst.frc.team5472.robot.subsystems;//5472
 
-import static org.usfirst.frc.team5472.robot.RobotMap.motorList;
-
-import org.usfirst.frc.team5472.robot.MotorInterface;
 import org.usfirst.frc.team5472.robot.RobotMap;
-import org.usfirst.frc.team5472.robot.Updatable;
 import org.usfirst.frc.team5472.robot.commands.FeedCommand;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class FeederSubsystem extends Subsystem implements MotorInterface, Updatable {
+public class FeederSubsystem extends Subsystem {
 	private SpeedController feederMotor;
 
 	private double feedValue = 0.6;
 
 	public FeederSubsystem() {
 		super("Feeder");
-		System.out.println("Feeder");
-		updateMotors();
-		updateValues();
-		System.out.println("Feeder");
-	}
 
-	@Override
-	public void updateValues() {
-		feedValue = SmartDashboard.getNumber("Feeder Speed", 0.6);
-	}
-
-	@Override
-	public void updateMotors() {
-		this.feederMotor = motorList[RobotMap.feederMotor];
+		this.feederMotor = new VictorSP(RobotMap.feederMotor);
 		feederMotor.setInverted(true);
 	}
 

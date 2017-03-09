@@ -1,43 +1,28 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
-import static org.usfirst.frc.team5472.robot.RobotMap.motorList;
-
-import org.usfirst.frc.team5472.robot.MotorInterface;
 import org.usfirst.frc.team5472.robot.RobotMap;
 import org.usfirst.frc.team5472.robot.commands.ShootCommand;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ShooterSubsystem extends Subsystem implements MotorInterface {
+public class ShooterSubsystem extends Subsystem {
 
 	private CANTalon shooterMotor;
 	private SpeedController conveyorMotor;
 	private SpeedController susanMotor;
 	private SpeedController agitatorMotor;
 
-	private void print(int... i) {
-		for (int j : i)
-			System.out.print("" + j + "  ");
-	}
-
 	public ShooterSubsystem() {
 		super("Shoot");
-		System.out.println("Shooter");
-		updateMotors();
-		System.out.println("shooter");
-	}
 
-	@Override
-	public void updateMotors() {
-		shooterMotor = (CANTalon) motorList[RobotMap.shooterMotor];
-		conveyorMotor = motorList[RobotMap.conveyorMotor];
-		susanMotor = motorList[RobotMap.susanMotor];
-		agitatorMotor = motorList[RobotMap.agitatorMotor];
-
-		print(RobotMap.shooterMotor, RobotMap.conveyorMotor, RobotMap.susanMotor, RobotMap.agitatorMotor);
+		shooterMotor = new CANTalon(RobotMap.shooterMotor);
+		conveyorMotor = new VictorSP(RobotMap.conveyorMotor);
+		susanMotor = new CANTalon(RobotMap.susanMotor);
+		agitatorMotor = new VictorSP(RobotMap.agitatorMotor);
 
 		shooterMotor.setInverted(false);
 		conveyorMotor.setInverted(false);
