@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team5472.robot.commands;
 
 import org.usfirst.frc.team5472.robot.Robot;
@@ -12,12 +13,14 @@ public class AutoKeyToSideCommand extends Command {
 
 	private boolean finished;
 	private boolean isBlue;
+	private boolean shoot;
 	private int angleMultiplier;
 
-	public AutoKeyToSideCommand() {
+	public AutoKeyToSideCommand(boolean s) {
 		requires(Robot.driveSubsystem);
 		isBlue = DriverStation.getInstance().getAlliance() == Alliance.Blue;
 		angleMultiplier = isBlue ? -1 : 1;
+		shoot = s;
 	}
 
 	@Override
@@ -53,6 +56,12 @@ public class AutoKeyToSideCommand extends Command {
 		// time for pilot to pick up gear
 		Robot.driveSubsystem.stop();
 		// add shooting
+		if (shoot) {
+			Robot.shootSubsystem.setAgitatorMotor(0.5);
+			Robot.shootSubsystem.setConveyor(0.5);
+			Robot.shootSubsystem.setShooterMotor(-0.63);
+			finished = true; // TODO: Do something
+		}
 		finished = true;
 	}
 

@@ -1,13 +1,15 @@
 
 package org.usfirst.frc.team5472.robot;
 
-import org.usfirst.frc.team5472.robot.commands.AutoDriveStraight;
+import org.usfirst.frc.team5472.robot.commands.AutoKeyToSideCommand;
+import org.usfirst.frc.team5472.robot.commands.AutoMidToMidCommand;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,6 +26,7 @@ public class Robot extends IterativeRobot {
 	public static ShooterSubsystem shootSubsystem;
 
 	private SendableChooser<Boolean> autonomousEnabled = new SendableChooser<Boolean>();
+	private SendableChooser<Boolean> shooterEnabled = new SendableChooser<Boolean>();
 
 	private Command autonomousCommand = null;
 
@@ -31,7 +34,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		if (autonomousEnabled.getSelected()) {
-			autonomousCommand = new AutoDriveStraight();
+			int pos = DriverStation.getInstance().getLocation();
+			boolean shoot = shooterEnabled.getSelected();
+			if (pos == 2) {
+				autonomousCommand = new AutoMidToMidCommand(shoot);
+			} else
+				autonomousCommand = new AutoKeyToSideCommand(shoot);
 			autonomousCommand.start();
 		}
 	}
@@ -66,7 +74,11 @@ public class Robot extends IterativeRobot {
 		autonomousEnabled.addDefault("Run autonomous", new Boolean(true));
 		autonomousEnabled.addObject("Do nothing", new Boolean(false));
 
+		shooterEnabled.addDefault("Shoot", new Boolean(true));
+		shooterEnabled.addObject("Just Drive", new Boolean(false));
+
 		SmartDashboard.putData("autoEnabled", autonomousEnabled);
+		SmartDashboard.putData("shootEnabled", shooterEnabled);
 
 		CameraServer.getInstance().startAutomaticCapture();
 	}

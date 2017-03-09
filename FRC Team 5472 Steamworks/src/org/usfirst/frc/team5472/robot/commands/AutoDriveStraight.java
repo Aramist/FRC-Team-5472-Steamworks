@@ -15,7 +15,7 @@ public class AutoDriveStraight extends Command {
 
 	@Override
 	public void execute() {
-		Robot.driveSubsystem.drive(0.34, 0.34);
+		Robot.driveSubsystem.driveWithHeading(0.34, 0);
 		Timer.delay(6.4); // Joseph look here, autonomous time in seconds
 		Robot.driveSubsystem.stop();
 		finished = true;

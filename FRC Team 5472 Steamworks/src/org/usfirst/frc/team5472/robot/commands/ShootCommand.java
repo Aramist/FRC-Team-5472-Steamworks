@@ -19,9 +19,9 @@ public class ShootCommand extends Command {
 	public ShootCommand() {
 		requires(Robot.shootSubsystem);
 
-		shooterSpeed = -0.55;
-		conveyorSpeed = 0.45;
-		agitatorSpeed = 0.75;
+		shooterSpeed = -0.63;
+		conveyorSpeed = 0.5;
+		agitatorSpeed = 0.5;
 		susanSpeed = 0.1;
 	}
 
