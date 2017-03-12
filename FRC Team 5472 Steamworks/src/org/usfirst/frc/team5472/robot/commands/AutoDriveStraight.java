@@ -15,10 +15,20 @@ public class AutoDriveStraight extends Command {
 
 	@Override
 	public void execute() {
-		Robot.driveSubsystem.driveWithHeading(0.34, 0);
-		Timer.delay(6.4); // Joseph look here, autonomous time in seconds
+		Robot.driveSubsystem.drive(-0.4, -0.4);
+		Timer.delay(3.0); // Joseph look here, autonomous time in seconds
 		Robot.driveSubsystem.stop();
 		finished = true;
+	}
+
+	@Override
+	public void end() {
+		Robot.driveSubsystem.stop();
+	}
+
+	@Override
+	public void interrupted() {
+		end();
 	}
 
 	@Override

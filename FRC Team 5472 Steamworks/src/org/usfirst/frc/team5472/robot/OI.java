@@ -19,8 +19,6 @@ public class OI {
 		// Joysticks
 		stick = new Joystick(0);
 		xbox = new Joystick(1);
-
-		System.out.println("OI");
 	}
 
 }

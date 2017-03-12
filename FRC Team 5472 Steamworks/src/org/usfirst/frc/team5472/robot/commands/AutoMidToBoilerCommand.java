@@ -30,7 +30,7 @@ public class AutoMidToBoilerCommand extends Command {
 
 	@Override
 	public void execute() {
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -10.4315)
+		while (Robot.driveSubsystem.getEncoder().getDistance() > -10.4315)
 			Robot.driveSubsystem.drive(-0.3, -0.3);
 		Robot.driveSubsystem.drive(0.1, 0.1);// slow down
 		Timer.delay(0.3);
@@ -38,9 +38,9 @@ public class AutoMidToBoilerCommand extends Command {
 		Robot.driveSubsystem.drive(0, 0);// stop
 		Robot.driveSubsystem.turnToHeading(angleMultiplier * -90);
 		// turn right 90 degrees
-		Robot.driveSubsystem.resetEncoders();
+		Robot.driveSubsystem.resetEncoder();
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -110.39)
+		while (Robot.driveSubsystem.getEncoder().getDistance() > -110.39)
 			Robot.driveSubsystem.drive(-0.3, -0.3);
 
 		Robot.driveSubsystem.drive(0.1, 0.1);// slow down
@@ -49,9 +49,9 @@ public class AutoMidToBoilerCommand extends Command {
 		Robot.driveSubsystem.drive(0, 0);// stop
 
 		Robot.driveSubsystem.turnToHeading(angleMultiplier * 0);
-		Robot.driveSubsystem.resetEncoders();
+		Robot.driveSubsystem.resetEncoder();
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -117.94)
+		while (Robot.driveSubsystem.getEncoder().getDistance() > -117.94)
 			Robot.driveSubsystem.drive(-0.3, -0.3);
 
 		Robot.driveSubsystem.drive(0.1, 0.1);// slow down
@@ -62,9 +62,9 @@ public class AutoMidToBoilerCommand extends Command {
 		Robot.driveSubsystem.turnToHeading(angleMultiplier * 60);
 		// turn to be facing lift
 
-		Robot.driveSubsystem.resetEncoders();
+		Robot.driveSubsystem.resetEncoder();
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -55.88)
+		while (Robot.driveSubsystem.getEncoder().getDistance() > -55.88)
 			Robot.driveSubsystem.drive(-0.3, -0.3);
 
 		Robot.driveSubsystem.drive(0.1, 0.1);

@@ -11,5 +11,6 @@
 	<classpathentry kind="var" path="USERLIBS_DIR/navx_frc.jar"/>
 	<classpathentry kind="var" path="USERLIBS_DIR/opencv-320.jar"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Utilities"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -34,8 +34,10 @@ public class AutoKeyToSideCommand extends Command {
 		// this - it's because
 		// we treat the front of the robot as the feed, so we're backwards in
 		// autonomous.
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -215.9)
-			Robot.driveSubsystem.drive(-0.3, -0.3);// drive forward 238.90732cm
+		Robot.driveSubsystem.driveWithHeading(-0.3, 0);
+		while (Robot.driveSubsystem.getEncoder().getDistance() > -215.9)
+			;
+		// drive forward 238.90732cm
 
 		Robot.driveSubsystem.drive(0.1, 0.1);// slow down
 		Timer.delay(0.3);
@@ -44,11 +46,11 @@ public class AutoKeyToSideCommand extends Command {
 		Robot.driveSubsystem.turnToHeading(angleMultiplier * 30);
 		// turn left 30 degrees
 
-		Robot.driveSubsystem.getLeftEncoder().reset();
-		Robot.driveSubsystem.getRightEncoder().reset();
+		Robot.driveSubsystem.resetEncoder();
 
-		while (Robot.driveSubsystem.getLeftEncoder().getDistance() > -50.8)
-			Robot.driveSubsystem.drive(-0.3, -0.3);// drive forward 80cm
+		Robot.driveSubsystem.driveWithHeading(-0.3, angleMultiplier * 30);
+		while (Robot.driveSubsystem.getEncoder().getDistance() > -50.8)
+			;
 
 		Robot.driveSubsystem.drive(0.1, 0.1);
 		Timer.delay(0.3);

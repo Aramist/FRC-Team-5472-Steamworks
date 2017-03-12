@@ -3,12 +3,11 @@ package org.usfirst.frc.team5472.robot.commands;
 import org.usfirst.frc.team5472.robot.Robot;
 import org.usfirst.frc.team5472.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class ShootCommand extends Command {
+public class PIDShootCommand extends Command {
 	private Joystick x;
 
 	private double shooterSpeed;
@@ -17,12 +16,12 @@ public class ShootCommand extends Command {
 	private double agitatorSpeed;
 	private double susanSpeed;
 
-	public ShootCommand() {
+	public PIDShootCommand() {
 		requires(Robot.shootSubsystem);
 
-		shooterSpeed = -0.63;
+		shooterSpeed = 3165; // 3200 from boiler gear peg supposedly
 		conveyorSpeed = 0.5;
-		agitatorSpeed = 1.0;
+		agitatorSpeed = 0.6;
 		susanSpeed = 0.1;
 	}
 
@@ -44,19 +43,22 @@ public class ShootCommand extends Command {
 			turn = susanSpeed;
 		else if (angle == 270)
 			turn = -susanSpeed;
+		Robot.shootSubsystem.setSusanMotor(turn);
 
 		if (Robot.oi.getXBOX().getRawButton(RobotMap.shootX))
-			Robot.shootSubsystem.setShooterMotor(shooterSpeed);
+			Robot.shootSubsystem.PIDSpool(shooterSpeed);
 		else
-			Robot.shootSubsystem.setShooterMotor(0.0);
+			Robot.shootSubsystem.stop();
 
 		if (Robot.oi.getXBOX().getRawButton(RobotMap.conveyorX)) {
 			Robot.shootSubsystem.setConveyor(conveyorSpeed);
+			Robot.shootSubsystem.setAgitatorMotor(agitatorSpeed);
 		} else if (Robot.oi.getXBOX().getRawButton(RobotMap.reverseFeedX)) {
 			Robot.shootSubsystem.setConveyor(-conveyorSpeed);
+			Robot.shootSubsystem.setAgitatorMotor(-agitatorSpeed);
 		} else {
-			Robot.shootSubsystem.setAgitatorMotor(0.0);
 			Robot.shootSubsystem.setConveyor(0.0);
+			Robot.shootSubsystem.setAgitatorMotor(0.0);
 		}
 
 	}
@@ -64,41 +66,6 @@ public class ShootCommand extends Command {
 	@Override
 	public void initialize() {
 		x = Robot.oi.getXBOX();
-		new Thread() {
-			@Override
-			public void run() {
-				while (DriverStation.getInstance().isEnabled()) {
-					if (Robot.oi.getXBOX().getRawButton(RobotMap.conveyorX)) {
-						Robot.shootSubsystem.setAgitatorMotor(agitatorSpeed);
-						try {
-							this.wait(1000);
-						} catch (InterruptedException ie) {
-							ie.printStackTrace();
-						}
-						Robot.shootSubsystem.setAgitatorMotor(0.0);
-						try {
-							this.wait(50);
-						} catch (InterruptedException ie) {
-							ie.printStackTrace();
-						}
-						Robot.shootSubsystem.setAgitatorMotor(-agitatorSpeed);
-						try {
-							this.wait(400);
-						} catch (InterruptedException ie) {
-							ie.printStackTrace();
-						}
-
-						Robot.shootSubsystem.setAgitatorMotor(0.0);
-						try {
-							this.wait(50);
-						} catch (InterruptedException ie) {
-							ie.printStackTrace();
-						}
-					}
-				}
-			}
-		}.start();
-
 	}
 
 	@Override

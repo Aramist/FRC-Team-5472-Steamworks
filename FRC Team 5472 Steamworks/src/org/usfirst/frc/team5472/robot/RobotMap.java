@@ -36,7 +36,7 @@ public class RobotMap {
 	public static int conveyorMotor = 4;
 
 	// Talons
-	public static int susanMotor = 3;
+	public static int susanMotor = 5;
 	public static int liftMotor = 4;
 	public static int shooterMotor = 2;
 
@@ -58,11 +58,11 @@ public class RobotMap {
 	public static final int climberShiftButton = 3;
 
 	// XBOX Controls
-	public static final int hacksX = XBOX.RB.id();
 	public static final int shootX = XBOX.LB.id();
 	public static final int fireAxisX = XBOX.LYAXIS.id();
 	public static final int conveyorX = XBOX.A.id();
 	public static final int reverseFeedX = XBOX.B.id();
+
 	public static final int susanManualLeftX = 180; // POV
 	public static final int susanManualRightX = 0; // POV
 

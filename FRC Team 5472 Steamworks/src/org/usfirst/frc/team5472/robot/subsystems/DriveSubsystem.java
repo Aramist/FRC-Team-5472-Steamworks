@@ -16,11 +16,6 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Waypoint;
-import jaci.pathfinder.followers.EncoderFollower;
-import jaci.pathfinder.modifiers.TankModifier;
 
 public class DriveSubsystem extends Subsystem {
 
@@ -59,8 +54,7 @@ public class DriveSubsystem extends Subsystem {
 	private PIDOutput anglePIDOutput;
 	private PIDOutput driveOutput;
 
-	private Encoder leftEncoder;
-	private Encoder rightEncoder;
+	private Encoder encoder;
 
 	// Turning to an angle
 	// PID Constants
@@ -71,9 +65,9 @@ public class DriveSubsystem extends Subsystem {
 	private double kF_angle = 0.00;
 
 	private PIDController drivePIDController;
-	private double kP_drive = 0.06;
+	private double kP_drive = 0.60;
 	private double kI_drive = 0.00;
-	private double kD_drive = 0.02;
+	private double kD_drive = 0.20;
 	private double kF_drive = 0.00;
 
 	public DriveSubsystem() {
@@ -89,8 +83,7 @@ public class DriveSubsystem extends Subsystem {
 		frontRight.setInverted(false);
 		backRight.setInverted(false);
 
-		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
-		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB);
+		encoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, true);
 
 		anglePIDOutput = (double d) -> {
 			double[] get = get();
@@ -103,20 +96,19 @@ public class DriveSubsystem extends Subsystem {
 
 		// Initialize angle PIDController
 		anglePIDController = new PIDController(kP_angle, kI_angle, kD_angle, kF_angle, navx, anglePIDOutput);
+		anglePIDController.setInputRange(-180, 180);
 		anglePIDController.setContinuous(true);
 		anglePIDController.setAbsoluteTolerance(10.0);
 
 		drivePIDController = new PIDController(kP_drive, kI_drive, kD_drive, kF_drive, new DriveWithVelocityPIDInput(), driveOutput);
 
-		leftEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
-		rightEncoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
+		encoder.setDistancePerPulse(RobotMap.wheelDiameter * Math.PI);
 
 		shiftGearSolenoid0 = new Solenoid(RobotMap.shiftGearSolenoid0);
 		shiftGearSolenoid1 = new Solenoid(RobotMap.shiftGearSolenoid1);
 
 		// Y'alll don't know what a real English class is
 		// \tAnna Darwish, 2017
-		System.out.println("Drive");
 	}
 
 	public void drive(double left, double right) {
@@ -126,35 +118,11 @@ public class DriveSubsystem extends Subsystem {
 		backRight.set(right);
 	}
 
-	public void joystickDrive(double throttle, double twist) {
-
-	}
-
-	public void driveWithVelocity(double velocity) {
-
-	}
-
-	public void followTrajectory(Waypoint[] waypoints) {
-		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 0.05, 1.7, 2.0, 60.0);
-		Trajectory trajectory = Pathfinder.generate(waypoints, config);
-		TankModifier modifier = new TankModifier(trajectory);
-		modifier.modify(RobotMap.wheelBaseWidth);
-		Trajectory left = modifier.getLeftTrajectory();
-		Trajectory right = modifier.getRightTrajectory();
-
-		EncoderFollower leftFollower = new EncoderFollower(left);
-		EncoderFollower rightFollower = new EncoderFollower(right);
-
-		for (int i = 0; i < left.segments.length; i++) {
-			leftFollower.configureEncoder(0, 20, RobotMap.wheelDiameter);
-			rightFollower.configureEncoder(0, 20, RobotMap.wheelDiameter);
-			leftFollower.configurePIDVA(0.80, 0.00, 0.01, 1.00 / 6.00, 0.50);
-			rightFollower.configurePIDVA(0.80, 0.00, 0.01, 1.00 / 6.00, 0.50);
-
-			drive(leftFollower.calculate(leftEncoder.get()), rightFollower.calculate(rightEncoder.get()));
-			Timer.delay(0.05);
-		}
-		stop();
+	public void driveWithVelocity(double velocity, boolean forwards) {
+		velocity = Math.abs(velocity);
+		this.drivePIDController.setInputRange(-velocity, velocity);
+		this.drivePIDController.setSetpoint(velocity * (forwards ? 1 : -1));
+		this.drivePIDController.enable();
 	}
 
 	public double[] get() {
@@ -162,17 +130,12 @@ public class DriveSubsystem extends Subsystem {
 		return ret;
 	}
 
-	public Encoder getLeftEncoder() {
-		return leftEncoder;
+	public Encoder getEncoder() {
+		return encoder;
 	}
 
-	public Encoder getRightEncoder() {
-		return rightEncoder;
-	}
-
-	public void resetEncoders() {
-		leftEncoder.reset();
-		rightEncoder.reset();
+	public void resetEncoder() {
+		encoder.reset();
 	}
 
 	@Override
@@ -190,6 +153,8 @@ public class DriveSubsystem extends Subsystem {
 		if (!isHighGear() && !high)
 			return;
 		switchSolenoid();
+		this.stop();
+		Timer.delay(.001);
 	}
 
 	public void stop() {

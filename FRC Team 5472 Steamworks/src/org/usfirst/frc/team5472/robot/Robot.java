@@ -1,16 +1,14 @@
 
 package org.usfirst.frc.team5472.robot;
 
-import org.usfirst.frc.team5472.robot.commands.AutoKeyToSideCommand;
-import org.usfirst.frc.team5472.robot.commands.AutoMidToMidCommand;
 import org.usfirst.frc.team5472.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.FeederSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.LiftSubsystem;
 import org.usfirst.frc.team5472.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -33,35 +31,42 @@ public class Robot extends IterativeRobot {
 	// @SuppressWarnings("unchecked")
 	@Override
 	public void autonomousInit() {
-		if (autonomousEnabled.getSelected()) {
-			int pos = DriverStation.getInstance().getLocation();
-			boolean shoot = shooterEnabled.getSelected();
-			if (pos == 2) {
-				autonomousCommand = new AutoMidToMidCommand(shoot);
-			} else
-				autonomousCommand = new AutoKeyToSideCommand(shoot);
-			autonomousCommand.start();
-		}
+		driveSubsystem.resetEncoder();
+		driveSubsystem.navx.zeroYaw();
+		// if (autonomousEnabled.getSelected()) {
+		// int pos = DriverStation.getInstance().getLocation();
+		// boolean shoot = shooterEnabled.getSelected();
+		// if (pos == 2) {
+		// autonomousCommand = new AutoDriveStraight();
+		// } else
+		// autonomousCommand = new AutoKeyToSideCommand(shoot);
+		// autonomousCommand.start();
+		Robot.driveSubsystem.drive(0.31, 0.25);
+		Timer.delay(3.8);
+		Robot.driveSubsystem.stop();
+		// }
 	}
 
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		double[] data = driveSubsystem.get();
-		System.out.println(data.length);
+		SmartDashboard.putNumber("Magnetic Encoder", driveSubsystem.getEncoder().get());
 		for (int i = 0; i < data.length; i++)
-			SmartDashboard.putNumber("Motor: " + i, data[i]);
+			SmartDashboard.putNumber("Motor " + i, data[i]);
 	}
 
 	@Override
 	public void disabledInit() {
-
+		driveSubsystem.resetEncoder();
+		driveSubsystem.navx.reset();
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-
+		SmartDashboard.putNumber("Encoder", driveSubsystem.getEncoder().get());
+		SmartDashboard.putNumber("Yaw Angle", driveSubsystem.navx.pidGet());
 	}
 
 	@Override
@@ -77,8 +82,10 @@ public class Robot extends IterativeRobot {
 		shooterEnabled.addDefault("Shoot", new Boolean(true));
 		shooterEnabled.addObject("Just Drive", new Boolean(false));
 
-		SmartDashboard.putData("autoEnabled", autonomousEnabled);
+		SmartDashboard.putData("auto", autonomousEnabled);
 		SmartDashboard.putData("shootEnabled", shooterEnabled);
+
+		driveSubsystem.navx.zeroYaw();
 
 		CameraServer.getInstance().startAutomaticCapture();
 	}
@@ -87,13 +94,14 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		driveSubsystem.resetEncoder();
 	}
 
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Left Encoder", driveSubsystem.getLeftEncoder().get());
-		SmartDashboard.putNumber("Right Encoder", driveSubsystem.getRightEncoder().get());
+		driveSubsystem.navx.zeroYaw();
+		SmartDashboard.putNumber("Encoder", driveSubsystem.getEncoder().get());
 		SmartDashboard.putNumber("Yaw Angle", driveSubsystem.navx.pidGet());
 		double[] data = driveSubsystem.get();
 		for (int i = 0; i < data.length; i++)

@@ -1,9 +1,11 @@
 package org.usfirst.frc.team5472.robot.subsystems;
 
 import org.usfirst.frc.team5472.robot.RobotMap;
-import org.usfirst.frc.team5472.robot.commands.ShootCommand;
+import org.usfirst.frc.team5472.robot.commands.PIDShootCommand;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -28,11 +30,34 @@ public class ShooterSubsystem extends Subsystem {
 		conveyorMotor.setInverted(false);
 		susanMotor.setInverted(false);
 		agitatorMotor.setInverted(false);
+
+		shooterMotor.enableBrakeMode(true);
+		shooterMotor.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		shooterMotor.changeControlMode(TalonControlMode.Speed);
+		shooterMotor.reverseOutput(true);
+		shooterMotor.reverseSensor(true);
+		shooterMotor.configPeakOutputVoltage(3, -12.0);
+		shooterMotor.setPID(0.2, // Proportional
+				0.0, // Integral
+				0.4, // Derivative
+				0.0265, // Feed-forward (when rpm change should tune this)
+				40, // IZone
+				0, 0);
+
+		// this.configureShooterPID();
+	}
+
+	// Spool with PIDs
+	public void PIDSpool(double rpm) {
+		shooterMotor.changeControlMode(TalonControlMode.Speed);
+		shooterMotor.enable();
+		shooterMotor.setSetpoint(rpm);
+		shooterMotor.enableBrakeMode(false);
 	}
 
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new ShootCommand());
+		setDefaultCommand(new PIDShootCommand());
 	}
 
 	public void setConveyor(double d) {
@@ -40,6 +65,7 @@ public class ShooterSubsystem extends Subsystem {
 	}
 
 	public void setShooterMotor(double d) {
+		shooterMotor.changeControlMode(TalonControlMode.PercentVbus);
 		shooterMotor.set(d);
 	}
 
@@ -51,16 +77,11 @@ public class ShooterSubsystem extends Subsystem {
 		agitatorMotor.set(d);
 	}
 
-	public void configureShooterPID() {
-		shooterMotor.setPID(0.8, 0, 0.1);
-		shooterMotor.setSetpoint(12000);
-		shooterMotor.enable();
-	}
-
 	public void stop() {
 		agitatorMotor.set(0.0);
 		susanMotor.set(0.0);
 		conveyorMotor.set(0.0);
+		shooterMotor.disable();
 		shooterMotor.set(0.0);
 	}
 }
